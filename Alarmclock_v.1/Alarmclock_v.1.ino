@@ -166,39 +166,38 @@ if(clockmode == 2) { //Меню 2 - меню с установками буди�
       }   
        }
   }
-    if(KB.getNum == 15 && alarm == true && clockmode == 2) {
-      while(true) {
-        digitalWrite(Backlight_pin, HIGH);
-        lcd.setCursor(0,0);
-        lcd.print(" Disable alarm?");
-        lcd.setCursor(0,1);
-        lcd.print("  Press * or #");
-        if(KB.onPress()) {
-          if(KB.getNum == 15) {
-          EEPROM.write(2,false);
-          lcd.clear();
-          lcd.print(" Alarm disabled");
-          delay(500);
-          clockmode = 1;
-          digitalWrite(Backlight_pin,LOW);
-          break;
+    if(KB.getNum == 15 && alarm == true && clockmode == 2) { //Если будильник уже включен
+      while(true) { //Запускаем цикл подтверждения выключения будильника
+        digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
+        lcd.setCursor(0,0); //Ставим курсор
+        lcd.print(" Disable alarm?"); //Отображаем информацию
+        lcd.setCursor(0,1); //Ставим курсор
+        lcd.print("  Press * or #"); //Отображаем информацию
+        if(KB.onPress()) { //Если нажата кнопка
+          if(KB.getNum == 15) { //Если кнопка - #
+          EEPROM.write(2,false); //Выключаем будильник
+          lcd.clear(); //Очищаем дисплей
+          lcd.print(" Alarm disabled"); //Отображаем информацию
+          delay(1000); //Ждем пока юзер прочитает 
+          clockmode = 1; //Ставим режим 1
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
           }
-          if(KB.getNum == 14) {
-          EEPROM.write(2,true);
-          lcd.clear();
-          lcd.print("Alarm ne dis");
-          delay(500);
-          clockmode = 1;
-          digitalWrite(Backlight_pin,LOW);
-          break;
+          if(KB.getNum == 14) { //Если кнопка - *
+          lcd.clear(); //Очищаем дисплей
+          lcd.print("Alarm ne dis"); //Отображаем информацию
+          delay(1000); //Ждем пока юзер прочитает
+          clockmode = 1; //Ставим режим 1
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
           }
         }
-          delay(100);
-          lcd.clear();
+          delay(100); //ждем для стабильности
+          lcd.clear(); //Очищаем дисплей
         }   
        }
-  if(alarmtimehour == 24) { alarmtimehour=0;}
-  if(alarmtimeminute == 60) {alarmtimeminute=0; alarmtimehour++;}
+  if(alarmtimehour == 24) { alarmtimehour=0;} //при переполнении часов сбрасываем
+  if(alarmtimeminute == 60) {alarmtimeminute=0; alarmtimehour++;} //при переполнении минут сбрасываем
 }
 if(clockmode == 3) {
   if(KB.isPressed()) {
