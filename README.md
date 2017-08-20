@@ -22,5 +22,5 @@
 ***
 # Установка
 * **Библиотеки** - библиотеки для дисплея и прочего скопировать в  
-
+        C:\Program Files (x86)\Arduino\libraries\
 *For English: Библиотеки translating libraries. 
