@@ -25,7 +25,7 @@
         C:\Program Files (x86)\Arduino\libraries\
 # Установка
 * **Библиотеки** - библиотеки для дисплея и прочего скопировать в  
-        `C:\Program Files (x86)\Arduino\libraries\` (Windows x64)  
-        `C:\Program Files\Arduino\libraries\` (Windows x86)
+       `C:\Program Files (x86)\Arduino\libraries\` (Windows x64)  
+       `C:\Program Files\Arduino\libraries\` (Windows x86)
 ***
 *For English: Библиотеки translating libraries. 
