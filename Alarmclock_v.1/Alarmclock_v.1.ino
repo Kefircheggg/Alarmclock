@@ -96,7 +96,7 @@ void loop() {
         }
       if(ShowDate == true) {
         lcd.setCursor(0,1);
-        if(now.day() < 10) {
+        if(now.day() < 10) { //У даты - тоже такая же фигня(пук кек)
           lcd.print("0");
           lcd.print(now.day(),DEC);
         }
@@ -111,7 +111,14 @@ void loop() {
         lcd.print(now.year(), DEC);
       }  
   }
-if(clockmode == 2) {
+if(clockmode == 2) { //Меню 2 - меню с установками будильника
+  /*
+  В втором меню управление такое - кнопки 4 и 7 это управление часами(временем) + -
+  Кнопки 6 и 9 это управление минутами + -
+  Кнопка 5 - выставить 30 минут
+  Кнопка 8 - выставить 12 часов
+  Кнопка 0 - выставить текущее время
+  */
   EEPROM.write(3,alarmtimeminute0);
   EEPROM.write(4,alarmtimehour0);
   lcd.print("Alarm setting");
