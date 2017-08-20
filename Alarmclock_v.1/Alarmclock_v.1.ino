@@ -119,50 +119,50 @@ if(clockmode == 2) { //Меню 2 - меню с установками буди�
   Кнопка 8 - выставить 12 часов
   Кнопка 0 - выставить текущее время
   */
-  EEPROM.write(3,alarmtimeminute0);
+  EEPROM.write(3,alarmtimeminute0); 
   EEPROM.write(4,alarmtimehour0);
-  lcd.print("Alarm setting");
+  lcd.print("Alarm setting"); //Отображаем текст
   lcd.setCursor(0,1);
   lcd.print(alarmtimehour0);
   lcd.print(":");
   lcd.print(alarmtimeminute0);
   if(KB.isPressed()) {
-    if(KB.getNum == 4)  { alarmtimehour0++; }
-    if(KB.getNum == 7)  { alarmtimehour0--; }
-    if(KB.getNum == 6)  { alarmtimeminute0++; }
-    if(KB.getNum == 9)  { alarmtimeminute0--; }
-    if(KB.getNum == 5)  { alarmtimeminute0=30;}
-    if(KB.getNum == 8)  { alarmtimehour0=12;}
-    if(KB.getNum == 0)  { alarmtimehour0 = now.hour(); alarmtimeminute0 = now.minute();}
+    if(KB.getNum == 4)  { alarmtimehour0++; } //если нажата кнопка 4 то прибавить часы
+    if(KB.getNum == 7)  { alarmtimehour0--; } //если нажата кнопка 7 то убавить часы
+    if(KB.getNum == 6)  { alarmtimeminute0++; } //если нажата кнопка 6 то прибавить минуты
+    if(KB.getNum == 9)  { alarmtimeminute0--; } //если нажата кнопка 9 то убавить минуты
+    if(KB.getNum == 5)  { alarmtimeminute0=30;} //если нажата кнопка 5 то выставить 30 минут
+    if(KB.getNum == 8)  { alarmtimehour0=12;} //если нажата кнопка 8 то выставить 12 часов
+    if(KB.getNum == 0)  { alarmtimehour0 = now.hour(); alarmtimeminute0 = now.minute();} //если нажата кнопка 0 то выставить текущее время
     if(KB.getNum == 15 && alarm == false) {
-      while(true) {
-        digitalWrite(Backlight_pin, HIGH);
-        lcd.setCursor(3,0);
-        lcd.print("Set alarm?");
-        lcd.setCursor(0,1);
-        lcd.print("  Press * or #");
-        if(KB.onPress()) {
-          if(KB.getNum == 15) {
-          EEPROM.write(2,true);
-          lcd.clear();
-          lcd.print("    Alarm set");
-          delay(500);
-          clockmode = 1;
-          digitalWrite(Backlight_pin,LOW);
-          break;
+      while(true) {  //Цикл подтверждения установки будильника
+        digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
+        lcd.setCursor(3,0); //Ставим курсор
+        lcd.print("Set alarm?"); //Отображаем информацию
+        lcd.setCursor(0,1); //Ставим курсор
+        lcd.print("  Press * or #"); //Отображаем информацию
+        if(KB.onPress()) { //Если нажата кнопка
+          if(KB.getNum == 15) { //Если кнопка - #
+          EEPROM.write(2,true); //Включаем будильник
+          lcd.clear(); //Очищаем дисплей
+          lcd.print("    Alarm set"); //Отображаем информацию
+          delay(1000); //Ждем, пока юзер прочитает
+          clockmode = 1; //Включаем режим 1
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
           }
-          if(KB.getNum == 14) {
-          EEPROM.write(2,false);
-          lcd.clear();
-          lcd.print(" Alarm dont set");
-          delay(500);
-          clockmode = 1;
-          digitalWrite(Backlight_pin,LOW);
-          break;
+          if(KB.getNum == 14) { //Если кнопка - *
+          EEPROM.write(2,false); //Не включаем будильник
+          lcd.clear(); //Очищаем дисплей
+          lcd.print(" Alarm dont set"); //Отображаем информацию
+          delay(1000); //Ждем, пока юзер прочитает
+          clockmode = 1; //Включаем режим 1
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
           }
         }
-          delay(100);
-          lcd.clear();
+          delay(100); //Ждем для стабильности
+          lcd.clear(); //Очищаем дисплей
       }   
        }
   }
