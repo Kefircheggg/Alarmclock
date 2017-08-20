@@ -21,7 +21,8 @@
         DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
         C:\Program Files (x86)\Arduino\libraries\
 # Установка
-        C:\Program Files (x86)\Arduino\libraries\
 * **Библиотеки** - библиотеки для дисплея и прочего скопировать в  
-        C:\Program Files (x86)\Arduino\libraries\
+        C:\Program Files (x86)\Arduino\libraries\ (Windows x64)
+        C:\Program Files\Arduino\libraries\ (Windows x86)
+***
 *For English: Библиотеки translating libraries. 
