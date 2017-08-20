@@ -55,44 +55,44 @@ void loop() {
   ShowDate = EEPROM.read(0); //Выставление значений переменным в зависимости от EEPROM
   DateTime now = rtc.now(); //Время
   if(calibration == true) { Calibrationfunction(); } //Если ардуина не настроена, то запустить этот процесс
-   if(KB.isPressed()) { 
-    if(KB.getNum == 1) {
-    clockmode = 1;
+   if(KB.isPressed()) { //Процесс выбора меню 
+    if(KB.getNum == 1) { //Если нажата кнопка 1,
+    clockmode = 1; //То режим - 1
       }
-    if(KB.getNum == 2) {
-    clockmode = 2;
+    if(KB.getNum == 2) { //Если нажата кнопка 2,
+    clockmode = 2; //То режим - 2
       }
-    if(KB.getNum == 3) {
-    clockmode = 3;
+    if(KB.getNum == 3) { //Если нажата кнопка 3,
+    clockmode = 3; //То режим - 3
       }
     }
-    if(clockmode == 1) {
-      if(now.hour() < 10) {
-      lcd.print("0");
-      lcd.print(now.hour(), DEC);
+    if(clockmode == 1) { //Если первое меню
+      if(now.hour() < 10) { //Тут у меня система красивого написания чисел, если число меньше 10 то,
+      lcd.print("0"); //В начале приписывается 0
+      lcd.print(now.hour(), DEC); //И уже потом идет число
       }
-      if(now.hour() >= 10) {
-      lcd.print(now.hour(), DEC);      
+      if(now.hour() >= 10) { //Если число больше 10 то,
+      lcd.print(now.hour(), DEC); //Просто пишем число     
       }
       lcd.print(":");
-      if(now.minute() < 10) {
+      if(now.minute() < 10) {//С минутами такая-же история
        lcd.print("0");
        lcd.print(now.minute(), DEC); 
       }
       if(now.minute() >= 10) {
         lcd.print(now.minute(), DEC);
       }
-      lcd.print(" T:");
-      if(dht.readTemperature() >= 10) {
+      lcd.print(" T:");   
+      if(dht.readTemperature() >= 10) { //И с температурой тоже
       lcd.print(dht.readTemperature(), 0);
       }
       if(dht.readTemperature() < 10){
       lcd.print("0");
       lcd.print(dht.readTemperature(), 0);
       }
-      if(alarm == true) {
+      if(alarm == true) { //Если будильник включен, то
         lcd.setCursor(15,0);
-        lcd.print("\xed");
+        lcd.print("\xed"); //Отображаем значок на дисплее
         }
       if(ShowDate == true) {
         lcd.setCursor(0,1);
