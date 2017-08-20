@@ -199,7 +199,7 @@ if(clockmode == 2) { //Меню 2 - меню с установками буди�
   if(alarmtimehour == 24) { alarmtimehour=0;} //при переполнении часов сбрасываем
   if(alarmtimeminute == 60) {alarmtimeminute=0; alarmtimehour++;} //при переполнении минут сбрасываем
 }
-if(clockmode == 3) {
+if(clockmode == 3) { //опиши меня пляз
   if(KB.isPressed()) {
     if(KB.getNum == 0) {
       possettings++;
