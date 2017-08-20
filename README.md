@@ -19,5 +19,9 @@
         AmperkaKB KB(6, 5, 4, 3, 2, 1, 0); //Пины матричной клавиатуры
         LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
         DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22  
-        
+***
+# Установка
+* **Библиотеки** - библиотеки для дисплея и прочего скопировать в  
+        C:\Program Files (x86)\Arduino\libraries\
+(Windows X64)
 *For English: Библиотеки translating libraries. 
