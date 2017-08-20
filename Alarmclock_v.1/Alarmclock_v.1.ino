@@ -47,15 +47,15 @@ rtc.adjust(DateTime(__DATE__, __TIME__)); //Настройка часов
 }
  
 void loop() {  
-  calibration = EEPROM.read(5);
-  alarmtimehour = EEPROM.read(4);
-  alarmtimeminute = EEPROM.read(3);
-  alarm = EEPROM.read(2);
-  stb_time = EEPROM.read(1);
-  ShowDate = EEPROM.read(0);
-  DateTime now = rtc.now();
-  if(calibration == true) { Calibrationfunction(); }
-   if(KB.isPressed()) {
+  calibration = EEPROM.read(5); //Выставление значений переменным в зависимости от EEPROM
+  alarmtimehour = EEPROM.read(4); //Выставление значений переменным в зависимости от EEPROM
+  alarmtimeminute = EEPROM.read(3); //Выставление значений переменным в зависимости от EEPROM
+  alarm = EEPROM.read(2); //Выставление значений переменным в зависимости от EEPROM
+  stb_time = EEPROM.read(1); //Выставление значений переменным в зависимости от EEPROM
+  ShowDate = EEPROM.read(0); //Выставление значений переменным в зависимости от EEPROM
+  DateTime now = rtc.now(); //Время
+  if(calibration == true) { Calibrationfunction(); } //Если ардуина не настроена, то запустить этот процесс
+   if(KB.isPressed()) { 
     if(KB.getNum == 1) {
     clockmode = 1;
       }
