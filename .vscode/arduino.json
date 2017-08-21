@@ -1,5 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "port": "COM4",
-    "sketch": "Alarmclock_v.1\\Alarmclock_v.1.ino"
-}
