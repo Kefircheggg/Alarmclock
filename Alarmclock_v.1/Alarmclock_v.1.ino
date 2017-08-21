@@ -368,7 +368,7 @@ if(KB.isPressed()) {
              delay(50);
             }  
   }
-  void pressfornext(int button) {
+  void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
     while(true) {
       if(KB.onPress()) {
         if(KB.getNum == button) {
