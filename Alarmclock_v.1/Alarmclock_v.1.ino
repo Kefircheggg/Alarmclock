@@ -96,7 +96,7 @@ void loop() {
         }
       if(ShowDate == true) {
         lcd.setCursor(0,1);
-        if(now.day() < 10) { //У даты - тоже такая же фигня(пук кек)
+        if(now.day() < 10) { //У даты - тоже такая же фигня
           lcd.print("0");
           lcd.print(now.day(),DEC);
         }
