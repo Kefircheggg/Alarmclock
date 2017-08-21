@@ -84,11 +84,11 @@ void loop() {
       }
       lcd.print(" T:");   
       if(dht.readTemperature() >= 10) { //И с температурой тоже
-      lcd.print(dht.readTemperature(), 0);
+      lcd.print(dht.readTemperature(), 1);
       }
       if(dht.readTemperature() < 10){
       lcd.print("0");
-      lcd.print(dht.readTemperature(), 0);
+      lcd.print(dht.readTemperature(), 1);
       }
       if(alarm == true) { //Если будильник включен, то
         lcd.setCursor(15,0);
@@ -257,8 +257,12 @@ if(clockmode == 3) { //Меню 3 - меню настроек
               for(int i = 0; i<5; i++) { EEPROM.write(i,0); delay(200); }
               EEPROM.write(5,true);
               lcd.print("reboot me please");
-              delay(200);
-              } 
+              delay(1000);
+              }
+            if(KB.getNum == 5 && resetpos == 0) {
+              clockmode = 1;
+              break;
+             }   
             }
           lcd.print("     Reset?");
           lcd.setCursor(0,1);
