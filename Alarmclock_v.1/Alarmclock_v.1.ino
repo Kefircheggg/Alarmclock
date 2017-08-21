@@ -224,7 +224,7 @@ if(clockmode == 3) { //Меню 3 - меню настроек
   if(stb_time == 20) { lcd.print(" 20s"); } //Просто
   }
   lcd.setCursor(0,0); //Выставляем курсор
-  if(possettings == 0) { //Опиши меня пляз)
+  if(possettings == 0) { //Это система выставления > в зависимости от позиции  
   lcd.print(">Time light");
   if(KB.isPressed()) {
     if(KB.getNum == 7) { EEPROM.write(1, 5); }
