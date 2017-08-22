@@ -240,54 +240,57 @@ if(clockmode == 3) { //Меню 3 - меню настроек
       if(KB.getNum == 7) { EEPROM.write(0, false); } //Если кнопка - 7, то опустить флажок и запиисать в EEPROM 0
       if(KB.getNum == 9) { EEPROM.write(0, true); } //Если кнопка - 9, то поднять флажок и запиисать в EEPROM 1
   }
-  lcd.print(" Time light");
-  lcd.setCursor(0,1);
-  lcd.print(">Show date  ");
-  lcd.print(ShowDate);
+  lcd.print(" Time light");  //Отображаем информацию
+  lcd.setCursor(0,1); //Ставим курсор
+  lcd.print(">Show date  "); //Отображаем информацию
+  lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
   } 
-  if(possettings == 2){
-    if(KB.isPressed()) {
-      if(KB.getNum == 8) { 
-        while(true) {
-          digitalWrite(Backlight_pin,HIGH);
-          if(KB.onPress()) { 
-            if(KB.getNum == 6) { resetpos=1; } 
-            if(KB.getNum == 4) { resetpos=0; }
-            if(KB.getNum == 5 && resetpos == 1) { 
-              for(int i = 0; i<5; i++) { EEPROM.write(i,0); delay(200); }
-              EEPROM.write(5,true);
-              lcd.print("reboot me please");
-              delay(1000);
+  if(possettings == 2){ //Это раздел сброса настроек
+    if(KB.isPressed()) { //Если кнопка нажата
+      if(KB.getNum == 8) { //Если кнопка - 8,то
+        while(true) { //Входим в цикл выбора: сбросить, или нет
+          digitalWrite(Backlight_pin,HIGH); //Включаем подсветку
+          if(KB.onPress()) { //Если кнопка нажата 
+            if(KB.getNum == 6) { resetpos=1; } //Если кнопка - 6 то ставим в положение YES
+            if(KB.getNum == 4) { resetpos=0; } //Если кнопка - 4 то ставим в положение NO
+            if(KB.getNum == 5 && resetpos == 1) { //Если кнопка - 5, и положение YES 
+              for(int i = 0; i<5; i++) { EEPROM.write(i,0); delay(200); } //Сбрасываем все значения EEPROM
+              EEPROM.write(5,true); //Поднимаем флажок настройки
+              lcd.print("reboot me please"); //Отображаем информацию
+              delay(1000); //ждем, пока юзер прочитает
               }
-            if(KB.getNum == 5 && resetpos == 0) {
-              clockmode = 1;
-              break;
+            if(KB.getNum == 5 && resetpos == 0) { //Если кнопка - 5, и положение NO 
+              clockmode = 1; //Ставим режим 1
+              delay(200); //Ждем
+              break; //выходим из цикла
              }   
             }
-          lcd.print("     Reset?");
-          lcd.setCursor(0,1);
-          if(resetpos == 0) {
+          lcd.print("     Reset?"); //Отображаем информацию
+          lcd.setCursor(0,1); //Ставим курсор
+          if(resetpos == 0) { //Система отображения [], простая
           lcd.print("   [NO]  YES");
           }
           if(resetpos == 1) {
           lcd.print("    NO  [YES]");
           }
-          delay(100);
-          lcd.clear();
+          delay(100); //Ждем
+          lcd.clear(); //Очищаем дисплей
         }
       }
      }
-  lcd.print(" Show Date  ");
-  lcd.print(ShowDate);
-  lcd.setCursor(0,1);
-  lcd.print(">Reset  ");
+  lcd.print(" Show Date  "); //Это уже не цикл, это продолжение отдела настроек, Отображаем информацию
+  lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
+  lcd.setCursor(0,1); //Выставляем курсор
+  lcd.print(">Reset  "); //Отображаем информацию
   } 
 }
-if(KB.isPressed()) {
-  if(KB.getNum == 14) {
-  digitalWrite(Backlight_pin, HIGH);
-  Backlight_flag = true;
-  standby_timer = millis();
+
+//Это система работы подсветки, начало
+if(KB.isPressed()) { //Если нажата кнопка
+  if(KB.getNum == 14) { //Если кнопка - *, то
+  digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
+  Backlight_flag = true; //Поднимаем флажок подсветки
+  standby_timer = millis(); // 
   }
 }
   if(Backlight_flag == true) {
@@ -297,6 +300,7 @@ if(KB.isPressed()) {
           standby_timer = millis();
       }
   }
+  //Конец
     if(alarm == true) {
       if(alarmtimehour == now.hour()) {
         if(alarmtimeminute == now.minute()) {
@@ -310,11 +314,7 @@ if(KB.isPressed()) {
     lcd.clear();
 }
 
-<<<<<<< HEAD
-  void alarmFunction() { //функция будильника, тут можно творить что угодно
-=======
   void alarmFunction() { //Это функция будильника, тут можно творить что угодно
->>>>>>> cbdbef262c074fa65e0ed89e4ec611e9fd2d0c12
             while(true){
             digitalWrite(led_pin,HIGH);
             digitalWrite(Backlight_pin,HIGH);
