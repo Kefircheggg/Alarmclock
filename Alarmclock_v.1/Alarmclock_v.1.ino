@@ -231,8 +231,8 @@ if(clockmode == 3) { //Меню 3 - меню настроек
     if(KB.getNum == 8) { EEPROM.write(1, 10); } //Если кнопка - 8, то выставить 10 секунд
     if(KB.getNum == 9) { EEPROM.write(1, 20); } //Если кнопка - 9, то выставить 20 секунд
   }
-  lcd.setCursor(0,1);
-  lcd.print(" Show date  ");
+  lcd.setCursor(0,1); //Выставляем курсор
+  lcd.print(" Show date  "); //Отображаем информацию
   lcd.print(ShowDate);  
   }
   if(possettings == 1) {
