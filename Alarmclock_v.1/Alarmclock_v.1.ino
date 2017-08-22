@@ -403,40 +403,40 @@ if(KB.isPressed()) { //Если нажата кнопка
     delay(100); //Ждем
     lcd.clear(); //Очищаем дисплей
       while(true) { //Цикл настройки отображения даты
-        if(KB.onPress()) {
-          if(KB.getNum == 4) { Showdatepos=0; }
-          if(KB.getNum == 6) { Showdatepos=1; }
-          if(KB.getNum == 5) { 
-            if(Showdatepos == 0) {
-              EEPROM.write(0,true);
-              lcd.clear();
-              lcd.print(" I Show date:)");
-              delay(3000);
-              break;
+        if(KB.onPress()) { //Если нажата кнопка 
+          if(KB.getNum == 4) { Showdatepos=0; } //Если кнопка - 4, то ставим на YES
+          if(KB.getNum == 6) { Showdatepos=1; } //Если кнопка - 6, то ставим на NO
+          if(KB.getNum == 5) { //Если кнопка - 5, то записываем в EEPROM 1 или 0
+            if(Showdatepos == 0) { //Если была нажата кнопка 4, то
+              EEPROM.write(0,true); //Записываем в EEPROM 1
+              lcd.clear(); //Очищаем дисплей
+              lcd.print(" I Show date:)"); //Отображаем информацию
+              delay(3000); //Ждем, пока юзер прочитает
+              break; //Выходим из цикла
             }
-            if(Showdatepos == 1) {
-              EEPROM.write(0,false);
-              lcd.clear();
-              lcd.print("I dont show date");
-              delay(3000);
-              break;
+            if(Showdatepos == 1) { //Если была нажата кнопка 6, то
+              EEPROM.write(0,false); //Записываем в EEPROM 0
+              lcd.clear(); //Очищаем дисплей
+              lcd.print("I dont show date"); //Отображаем информацию
+              delay(3000); //Ждем, пока юзер прочитает
+              break; //Выходим из цикла
             }
           }
         }
-        lcd.setCursor(3,0);
-        lcd.print("Show Date?");
-        lcd.setCursor(0,1);
-        if(Showdatepos == 0) {
+        lcd.setCursor(3,0); //Ставим курсор
+        lcd.print("Show Date?"); //Отображаем информацию
+        lcd.setCursor(0,1); //Ставим курсор
+        if(Showdatepos == 0) { //Тут система отрисовки [] в зависимости от нажатой кнопки
           lcd.print("  [Yes]    No   ");
           }
         if(Showdatepos == 1) {
           lcd.print("   Yes    [No]  ");
           }
-        delay(100);
-        lcd.clear();
+        delay(100); //Ждем для стабильности
+        lcd.clear(); //Очищаем дисплей
     }
-    lcd.clear();
-    lcd.print("Ok, Go next");
+    lcd.clear(); //Очищаем дисплей
+    lcd.print("Ok, Go next"); //Опиши меня пляззз пук кек чебурек
     delay(2000);
     lcd.clear();
     lcd.print(" Now we choise ");
