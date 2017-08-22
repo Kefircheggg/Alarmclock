@@ -367,23 +367,23 @@ if(KB.isPressed()) { //Если нажата кнопка
                 }
               }
             }
-          delay(100);
+          delay(100); //задержка
     }  
   }
   void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
-    while(true) {
-      if(KB.onPress()) {
-        if(KB.getNum == button) {
-          break;
+    while(true) { //бесконечный цикл
+      if(KB.onPress()) { //При нажатии кнопки
+        if(KB.getNum == button) { //Если кнопка равна указанной
+          break; //выходим из цикла
         }
       }
-      delay(50);
+      delay(10); //задержка
     }
   }
   void Calibrationfunction() { //Это функция первоначальной настройки
-    digitalWrite(Backlight_pin,HIGH);
-    lcd.setCursor(5,0);
-    lcd.print("H");
+    digitalWrite(Backlight_pin,HIGH);  //Включаем подсветку
+    lcd.setCursor(5,0); //Ставим курсор
+    lcd.print("H"); //Анимация слова "Hello!"  
     delay(100);
     lcd.print("e");
     delay(100);
@@ -395,14 +395,14 @@ if(KB.isPressed()) { //Если нажата кнопка
     delay(100);
     lcd.print("!");
     delay(5000);
-    lcd.clear();
-    lcd.print("Its calibration");
-    lcd.setCursor(0,1);
-    lcd.print("For next press 5");
-    pressfornext(5);
-    delay(100);
-    lcd.clear();
-      while(true) {
+    lcd.clear(); //Очищаем дисплей 
+    lcd.print("Its calibration"); //Отображаем информацию
+    lcd.setCursor(0,1); //Выставляем курсор
+    lcd.print("For next press 5"); //Отображаем информацию
+    pressfornext(5); //Запускаем ту функцию
+    delay(100); //Ждем
+    lcd.clear(); //Очищаем дисплей
+      while(true) { //Цикл настройки отображения даты
         if(KB.onPress()) {
           if(KB.getNum == 4) { Showdatepos=0; }
           if(KB.getNum == 6) { Showdatepos=1; }
