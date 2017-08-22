@@ -290,28 +290,31 @@ if(KB.isPressed()) { //Если нажата кнопка
   if(KB.getNum == 14) { //Если кнопка - *, то
   digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
   Backlight_flag = true; //Поднимаем флажок подсветки
-  standby_timer = millis(); // 
+  standby_timer = millis(); //Даже не знаю что написать, поэтому пук кек
   }
 }
-  if(Backlight_flag == true) {
-      if(millis() - standby_timer > 1000*stb_time) {
-          Backlight_flag = false;
-          digitalWrite(Backlight_pin, LOW);
-          standby_timer = millis();
+  if(Backlight_flag == true) { //Если флажок поднят
+      if(millis() - standby_timer > 1000*stb_time) { //Если с момента нажатия прошло больше чем stb_time*1000
+          Backlight_flag = false; //Опускаем флажок
+          digitalWrite(Backlight_pin, LOW); //Выключаем подсветку
+          standby_timer = millis(); //см. строка 293
       }
   }
   //Конец
-    if(alarm == true) {
-      if(alarmtimehour == now.hour()) {
-        if(alarmtimeminute == now.minute()) {
-          if(clockmode == 1) {
-            alarmFunction();
+  //Функция срабатывания будильника, начало
+    if(alarm == true) { //Если флажок будильника поднят
+      if(alarmtimehour == now.hour()) { //Если час срабатывания настал
+        if(alarmtimeminute == now.minute()) { //Если минута срабатывания настала 
+          if(clockmode == 1 || clockmode == 3) { //Если меню 1 или 3
+            alarmFunction(); //запускается сама функция будильника
           }
         }
       }
     }
-    delay(100);
-    lcd.clear();
+  //Функция срабатывания будильника, конец
+
+    delay(100); //Задержа ддя стабильности  
+    lcd.clear(); //Очищаем дисплей
 }
 
   void alarmFunction() { //Это функция будильника, тут можно творить что угодно
@@ -382,7 +385,7 @@ if(KB.isPressed()) { //Если нажата кнопка
       delay(50);
     }
   }
-  void Calibrationfunction() {
+  void Calibrationfunction() { //Это функция первоначальной настройки
     digitalWrite(Backlight_pin,HIGH);
     lcd.setCursor(5,0);
     lcd.print("H");
