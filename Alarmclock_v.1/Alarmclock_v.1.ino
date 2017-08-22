@@ -310,7 +310,11 @@ if(KB.isPressed()) {
     lcd.clear();
 }
 
+<<<<<<< HEAD
+  void alarmFunction() { //функция будильника, тут можно творить что угодно
+=======
   void alarmFunction() { //Это функция будильника, тут можно творить что угодно
+>>>>>>> cbdbef262c074fa65e0ed89e4ec611e9fd2d0c12
             while(true){
             digitalWrite(led_pin,HIGH);
             digitalWrite(Backlight_pin,HIGH);
@@ -500,5 +504,5 @@ if(KB.isPressed()) {
     pressfornext(5);
     EEPROM.write(5, false);
     digitalWrite(Backlight_pin,LOW);
-  }
+  } 
 
