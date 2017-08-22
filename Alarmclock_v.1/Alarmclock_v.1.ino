@@ -349,31 +349,26 @@ if(KB.isPressed()) { //Если нажата кнопка
                   lcd.clear(); //Очищаем дисплей
                   lcd.setCursor(0,0); //Выставляем курсор 
                   lcd.print("Dont this button"); //Отображаем информацию
-                  lcd.setCursor(0,1); //
-                  lcd.print("Button: ");
-                  lcd.print(passalarm1);
-                  delay(1000);
+                  lcd.setCursor(0,1); //Выставляем курсор
+                  lcd.print("Button: "); //Отображаем информацию
+                  lcd.print(passalarm1); //Отображаем вторую рандомную кнопку
+                  delay(1000); //Ждем, пока юзер прочитает
                 }
-                if(KB.getNum == passalarm1) {
-                EEPROM.write(2, false);
-                digitalWrite(led_pin,LOW);
-                digitalWrite(Backlight_pin,LOW);
-                clockmode = 1;
-                break;
+                if(KB.getNum == passalarm1) { //Если все правильно
+                EEPROM.write(2, false); //Опускаем флажок будильника 
+                digitalWrite(led_pin,LOW); //Выключаем светодиод
+                digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+                passalarm0 = random(0,9); //Генерируем новое рандомное число
+                passalarm1 = random(0,9); //Генерируем новое рандомное число
+                clockmode = 1; //Переходим в первое меню
+                break; //Выходим из цикла
+                    }
                   }
-                }
-                  delay(200);
                 }
               }
             }
-              delay(100);
-                if(EEPROM.read(2) == false) { 
-                passalarm0 = random(0,9); 
-                passalarm1 = random(0,9); 
-                break;
-             }
-             delay(50);
-            }  
+          delay(100);
+    }  
   }
   void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
     while(true) {
