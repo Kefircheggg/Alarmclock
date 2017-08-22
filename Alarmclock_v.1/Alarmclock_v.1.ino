@@ -225,11 +225,11 @@ if(clockmode == 3) { //Меню 3 - меню настроек
   }
   lcd.setCursor(0,0); //Выставляем курсор
   if(possettings == 0) { //Это система выставления > в зависимости от позиции  
-  lcd.print(">Time light");
-  if(KB.isPressed()) {
-    if(KB.getNum == 7) { EEPROM.write(1, 5); }
-    if(KB.getNum == 8) { EEPROM.write(1, 10); }
-    if(KB.getNum == 9) { EEPROM.write(1, 20); }
+  lcd.print(">Time light"); //Отображаем информацию
+  if(KB.isPressed()) { //Если кнопка нажата
+    if(KB.getNum == 7) { EEPROM.write(1, 5); } //Если кнопка - 7, то выставить 5 секунд
+    if(KB.getNum == 8) { EEPROM.write(1, 10); } //Если кнопка - 8, то выставить 10 секунд
+    if(KB.getNum == 9) { EEPROM.write(1, 20); } //Если кнопка - 9, то выставить 20 секунд
   }
   lcd.setCursor(0,1);
   lcd.print(" Show date  ");
