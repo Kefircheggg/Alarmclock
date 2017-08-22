@@ -18,7 +18,7 @@
 int Backlight_pin = 10; //Пин подсветки
 int led_pin = 9;  //Пин светодиода
 int dht_pin = 7; //Пин датчика температуры
-int busser_pin = 8; //Пин пищалки
+int buzzer_pin = 8; //Пин пищалки
 AmperkaKB KB(6, 5, 4, 3, 2, 1, 0); //Пины матричной клавиатуры
 LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
@@ -318,18 +318,18 @@ if(KB.isPressed()) { //Если нажата кнопка
 }
 
   void alarmFunction() { //Это функция будильника, тут можно творить что угодно
-            while(true){
-            digitalWrite(led_pin,HIGH);
-            digitalWrite(Backlight_pin,HIGH);
-            lcd.clear();
-            lcd.setCursor(4,0);
-            lcd.print("Get Up!");
-            lcd.setCursor(0,1);
-            lcd.print(passalarm0);
-            lcd.print(" ");
-            lcd.print(passalarm1);
-            tone(8,3500,250);
-            tone(8,100,100);
+            while(true){ //Бесконечный цикл, который прерывается только по нажатию на две рандомные кнопки 
+            digitalWrite(led_pin,HIGH); //Включаем светодиод
+            digitalWrite(Backlight_pin,HIGH); //Включаем подсветку
+            lcd.clear(); //Очищаем дисплей
+            lcd.setCursor(4,0); //Выставляем курсор
+            lcd.print("Get Up!"); //Отображаем информацию, тут можно написать что угодно
+            lcd.setCursor(0,1); //Выставляем курсор
+            lcd.print(passalarm0); //Пишем первое радномное число
+            lcd.print(" "); //Пробел
+            lcd.print(passalarm1); //Пишем второе радномное число
+            tone(buzzer_pin,3500,250); //пищим пищалкой
+            tone(buzzer_pin,100,100);
             if(KB.onPress()) {
               if(KB.getNum != passalarm0) {
                 lcd.clear();
