@@ -328,28 +328,28 @@ if(KB.isPressed()) { //Если нажата кнопка
             lcd.print(passalarm0); //Пишем первое радномное число
             lcd.print(" "); //Пробел
             lcd.print(passalarm1); //Пишем второе радномное число
-            tone(buzzer_pin,3500,250); //пищим пищалкой
-            tone(buzzer_pin,100,100);
-            if(KB.onPress()) {
-              if(KB.getNum != passalarm0) {
-                lcd.clear();
-                lcd.setCursor(0,0);
-                lcd.print("Dont this button");
-                lcd.setCursor(0,1);
-                lcd.print("Button: ");
-                lcd.print(passalarm0);                
+            tone(buzzer_pin,3500,250); //Пищим пищалкой
+            tone(buzzer_pin,100,100); //Пищим пищалкой
+            if(KB.onPress()) { //Если кнопка нажата
+              if(KB.getNum != passalarm0) { //Если нажатая кнопка не равна рандомной кнопке
+                lcd.clear(); //Очищаем дисплей
+                lcd.setCursor(0,0); //Выставляем курсор 
+                lcd.print("Dont this button"); //Отображаем информацию
+                lcd.setCursor(0,1); //Выставляем курсор 
+                lcd.print("Button: "); //Отображаем информацию
+                lcd.print(passalarm0); //Отображаем нужную кнопку               
                 delay(1000);
               }
-              if(KB.getNum == passalarm0) {
-                while(true) {
-                lcd.clear();
-                lcd.print("Next step");
-                if(KB.onPress()) {
-                if(KB.getNum != passalarm1) {
-                  lcd.clear();
-                  lcd.setCursor(0,0);
-                  lcd.print("Dont this button");
-                  lcd.setCursor(0,1);
+              if(KB.getNum == passalarm0) { //Если нажатая кнопка равна рандомной кнопке
+                while(true) { //Запускаем цикл
+                lcd.clear(); //Очищаем дисплей 
+                lcd.print("Next step"); //Отображаем информацию
+                if(KB.onPress()) { //Если кнопка нажата
+                if(KB.getNum != passalarm1) { //Если вторая нажатая кнопка не равна второй рандомной кнопке
+                  lcd.clear(); //Очищаем дисплей
+                  lcd.setCursor(0,0); //Выставляем курсор 
+                  lcd.print("Dont this button"); //Отображаем информацию
+                  lcd.setCursor(0,1); //
                   lcd.print("Button: ");
                   lcd.print(passalarm1);
                   delay(1000);
