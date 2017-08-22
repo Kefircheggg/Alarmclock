@@ -84,11 +84,11 @@ void loop() {
       }
       lcd.print(" T:");   
       if(dht.readTemperature() >= 10) { //И с температурой тоже
-      lcd.print(dht.readTemperature(), 1);
+      lcd.print(dht.readTemperature(), 0);
       }
       if(dht.readTemperature() < 10){
       lcd.print("0");
-      lcd.print(dht.readTemperature(), 1);
+      lcd.print(dht.readTemperature(), 0);
       }
       if(alarm == true) { //Если будильник включен, то
         lcd.setCursor(15,0);
@@ -97,7 +97,7 @@ void loop() {
       if(ShowDate == true) {
         lcd.setCursor(0,1);
         if(now.day() < 10) { //У даты - тоже такая же фигня
-          lcd.print("0");
+          lcd.print("0"); 
           lcd.print(now.day(),DEC);
         }
         if(now.day() >= 10) { lcd.print(now.day(),DEC); }
@@ -224,7 +224,7 @@ if(clockmode == 3) { //Меню 3 - меню настроек
   if(stb_time == 20) { lcd.print(" 20s"); } //Просто
   }
   lcd.setCursor(0,0); //Выставляем курсор
-  if(possettings == 0) { //Опиши меня пляз)
+  if(possettings == 0) { //Это система выставления > в зависимости от позиции  
   lcd.print(">Time light");
   if(KB.isPressed()) {
     if(KB.getNum == 7) { EEPROM.write(1, 5); }
@@ -310,7 +310,11 @@ if(KB.isPressed()) {
     lcd.clear();
 }
 
+<<<<<<< HEAD
   void alarmFunction() { //функция будильника, тут можно творить что угодно
+=======
+  void alarmFunction() { //Это функция будильника, тут можно творить что угодно
+>>>>>>> cbdbef262c074fa65e0ed89e4ec611e9fd2d0c12
             while(true){
             digitalWrite(led_pin,HIGH);
             digitalWrite(Backlight_pin,HIGH);
@@ -368,7 +372,7 @@ if(KB.isPressed()) {
              delay(50);
             }  
   }
-  void pressfornext(int button) {
+  void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
     while(true) {
       if(KB.onPress()) {
         if(KB.getNum == button) {
