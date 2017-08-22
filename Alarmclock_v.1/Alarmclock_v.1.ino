@@ -233,12 +233,12 @@ if(clockmode == 3) { //Меню 3 - меню настроек
   }
   lcd.setCursor(0,1); //Выставляем курсор
   lcd.print(" Show date  "); //Отображаем информацию
-  lcd.print(ShowDate);  
+  lcd.print(ShowDate);  //Флажок отображения даты
   }
-  if(possettings == 1) {
-    if(KB.isPressed()) {
-      if(KB.getNum == 7) { EEPROM.write(0, false); }
-      if(KB.getNum == 9) { EEPROM.write(0, true); }
+  if(possettings == 1) { //Если пользователь нажал 0
+    if(KB.isPressed()) { //Если кнопка нажата
+      if(KB.getNum == 7) { EEPROM.write(0, false); } //Если кнопка - 7, то опустить флажок и запиисать в EEPROM 0
+      if(KB.getNum == 9) { EEPROM.write(0, true); } //Если кнопка - 9, то поднять флажок и запиисать в EEPROM 1
   }
   lcd.print(" Time light");
   lcd.setCursor(0,1);
