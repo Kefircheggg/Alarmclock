@@ -23,6 +23,7 @@ LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
+int version = 5;
 int last_temp;
 int max_temp;
 int min_temp;
@@ -207,8 +208,8 @@ if(clockmode == 3) { //Меню 3 - меню настроек
     if(KB.getNum == 0) { possettings++; }  //Если кнопка - 0 опускаем курсор
     if(KB.getNum == 5) { possettings--; } //Если кнопка - 5 Поднимаем курсор   
   }
-  if(possettings == -1) { possettings = 2; } //Это при 
-  if(possettings == 3) { possettings = 0; } //Переполнении
+  if(possettings == -1) { possettings = 3; } //Это при 
+  if(possettings == 4) { possettings = 0; } //Переполнении
   lcd.setCursor(11,0);  //Выставляем курсор
   if(possettings == 0 || possettings == 1) { //Алгоритм отрисовки времени работы подсветки 
   if(stb_time == 5) { lcd.print("  5s"); } //Тут все просто
@@ -217,25 +218,25 @@ if(clockmode == 3) { //Меню 3 - меню настроек
   }
   lcd.setCursor(0,0); //Выставляем курсор
   if(possettings == 0) { //Это система выставления > в зависимости от позиции  
-  lcd.print(">Time light"); //Отображаем информацию
-  if(KB.isPressed()) { //Если кнопка нажата
-    if(KB.getNum == 7) { EEPROM.write(1, 5); } //Если кнопка - 7, то выставить 5 секунд
-    if(KB.getNum == 8) { EEPROM.write(1, 10); } //Если кнопка - 8, то выставить 10 секунд
-    if(KB.getNum == 9) { EEPROM.write(1, 20); } //Если кнопка - 9, то выставить 20 секунд
-  }
-  lcd.setCursor(0,1); //Выставляем курсор
-  lcd.print(" Show date  "); //Отображаем информацию
-  lcd.print(ShowDate);  //Флажок отображения даты
+    lcd.print(">Time light"); //Отображаем информацию
+      if(KB.isPressed()) { //Если кнопка нажата
+      if(KB.getNum == 7) { EEPROM.write(1, 5); } //Если кнопка - 7, то выставить 5 секунд
+      if(KB.getNum == 8) { EEPROM.write(1, 10); } //Если кнопка - 8, то выставить 10 секунд
+      if(KB.getNum == 9) { EEPROM.write(1, 20); } //Если кнопка - 9, то выставить 20 секунд
+    }
+    lcd.setCursor(0,1); //Выставляем курсор
+    lcd.print(" Show date  "); //Отображаем информацию
+    lcd.print(ShowDate);  //Флажок отображения даты
   }
   if(possettings == 1) { //Если пользователь нажал 0
     if(KB.isPressed()) { //Если кнопка нажата
       if(KB.getNum == 7) { EEPROM.write(0, false); } //Если кнопка - 7, то опустить флажок и запиисать в EEPROM 0
       if(KB.getNum == 9) { EEPROM.write(0, true); } //Если кнопка - 9, то поднять флажок и запиисать в EEPROM 1
-  }
-  lcd.print(" Time light");  //Отображаем информацию
-  lcd.setCursor(0,1); //Ставим курсор
-  lcd.print(">Show date  "); //Отображаем информацию
-  lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
+    }
+    lcd.print(" Time light");  //Отображаем информацию
+    lcd.setCursor(0,1); //Ставим курсор
+    lcd.print(">Show date  "); //Отображаем информацию
+    lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
   } 
   if(possettings == 2){ //Это раздел сброса настроек
     if(KB.isPressed()) { //Если кнопка нажата
@@ -270,10 +271,45 @@ if(clockmode == 3) { //Меню 3 - меню настроек
         }
       }
      }
-  lcd.print(" Show Date  "); //Это уже не цикл, это продолжение отдела настроек, Отображаем информацию
-  lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
-  lcd.setCursor(0,1); //Выставляем курсор
-  lcd.print(">Reset  "); //Отображаем информацию
+    lcd.print(" Show Date  "); //Это уже не цикл, это продолжение отдела настроек, Отображаем информацию
+    lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
+    lcd.setCursor(0,1); //Выставляем курсор
+    lcd.print(">Reset  "); //Отображаем информацию
+  }
+  if(possettings == 3) {
+    lcd.print(" Reset");
+    lcd.setCursor(0,1);
+    lcd.print(">About program");
+    if(KB.isPressed()) {
+      if(KB.getNum == 8) {
+          lcd.clear();
+          lcd.print("  Created 2017  ");
+          lcd.setCursor(0,1);
+          lcd.print(" By kefircheggg ");
+          pressfornext(8);
+          lcd.clear();
+          lcd.print(" By kefircheggg ");
+          lcd.setCursor(0,1);
+          lcd.print("  Github.com/   ");
+          pressfornext(8);
+          lcd.clear();
+          lcd.print("  Github.com/   ");
+          lcd.setCursor(0,1);
+          lcd.print("  Kefircheggg   ");
+          pressfornext(8);
+          lcd.clear();
+          lcd.print("  Kefircheggg   ");
+          lcd.setCursor(0,1);
+          lcd.print(" Vk.com/maxnic  ");
+          pressfornext(8);
+          lcd.clear();
+          lcd.print(" vk.com/maxnic  ");
+          lcd.setCursor(0,1);
+          lcd.print("  V1.3.5 Beta");
+          pressfornext(8);      
+          lcd.clear();
+      }
+    }
   } 
 }
 
@@ -295,6 +331,11 @@ now_temp = dht.readTemperature();
 
 //Это система работы подсветки, начало
 if(KB.isPressed()) { //Если нажата кнопка
+  if(KB.getNum == 14 && Backlight_flag == true) {
+    Backlight_flag = false; //Опускаем флажок
+    for(int i = 255; i>0; i--) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного выключения подсветки
+    digitalWrite(Backlight_pin, LOW); //Выключаем подсветку
+  }
   if(KB.getNum == 14) { //Если кнопка - *, то
   for(int i = 0; i<255; i++) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного включения подсветки
   digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
@@ -328,9 +369,9 @@ if(KB.isPressed()) { //Если нажата кнопка
 }
 
   void alarmFunction() { //Это функция будильника, тут можно творить что угодно
-            while(true){ //Бесконечный цикл, который прерывается только по нажатию на две рандомные кнопки 
-            digitalWrite(led_pin,HIGH); //Включаем светодиод
-            digitalWrite(Backlight_pin,HIGH); //Включаем подсветку
+            while(true){ //Бесконечный цикл, который прерывается только по нажатию на две рандомные кнопки
+            digitalWrite(Backlight_pin, HIGH);
+            digitalWrite(led_pin, HIGH);
             lcd.clear(); //Очищаем дисплей
             lcd.setCursor(4,0); //Выставляем курсор
             lcd.print("Get Up!"); //Отображаем информацию, тут можно написать что угодно
@@ -354,6 +395,7 @@ if(KB.isPressed()) { //Если нажата кнопка
                 while(true) { //Запускаем цикл
                 lcd.clear(); //Очищаем дисплей 
                 lcd.print("Next step"); //Отображаем информацию
+                delay(30);
                 if(KB.onPress()) { //Если кнопка нажата
                 if(KB.getNum != passalarm1) { //Если вторая нажатая кнопка не равна второй рандомной кнопке
                   lcd.clear(); //Очищаем дисплей
@@ -366,8 +408,13 @@ if(KB.isPressed()) { //Если нажата кнопка
                 }
                 if(KB.getNum == passalarm1) { //Если все правильно
                 EEPROM.write(2, false); //Опускаем флажок будильника
-                digitalWrite(led_pin,LOW); //Выключаем светодиод
-                digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+                for(int i = 255; i>255; i--) {
+                  analogWrite(led_pin, i);
+                  analogWrite(Backlight_pin, i);
+                  delay(1);
+                  }
+                digitalWrite(Backlight_pin, LOW);
+                digitalWrite(led_pin, LOW);
                 passalarm0 = random(0,9); //Генерируем новое рандомное число
                 passalarm1 = random(0,9); //Генерируем новое рандомное число
                 break;
@@ -376,8 +423,10 @@ if(KB.isPressed()) { //Если нажата кнопка
                 }
               }
             }
-          delay(100); //задержка
-          if(EEPROM.read(2) == false) { break; }
+            digitalWrite(Backlight_pin, LOW);
+            digitalWrite(led_pin, LOW);
+            delay(50); //задержка
+            if(EEPROM.read(2) == false) { break; }
     }  
   }
   void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
