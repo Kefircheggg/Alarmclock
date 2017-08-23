@@ -24,7 +24,7 @@ DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
 int stb_time; //В секундах!
-long standby_timer;
+unsigned long standby_timer;
 int clockmode = 1;
 int alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos; //Всякие переменные
 int passalarm0 = random(10);
@@ -486,4 +486,3 @@ if(KB.isPressed()) { //Если нажата кнопка
   /*
   "Делает дэб"
   */
-
