@@ -23,7 +23,7 @@ LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
-int version = 5;
+String version = "V1.3.5"; 
 int last_temp;
 int max_temp;
 int min_temp;
@@ -304,8 +304,8 @@ if(clockmode == 3) { //Меню 3 - меню настроек
           pressfornext(8);
           lcd.clear();
           lcd.print(" vk.com/maxnic  ");
-          lcd.setCursor(0,1);
-          lcd.print("  V1.3.5 Beta");
+          lcd.setCursor(4,1);
+          lcd.print(version);
           pressfornext(8);      
           lcd.clear();
       }
