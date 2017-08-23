@@ -27,7 +27,7 @@ int last_temp;
 int max_temp;
 int min_temp;
 int now_temp;
-int stb_time; //В секундах!
+int stb_time;
 unsigned long standby_timer;
 int clockmode = 1;
 int alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos; //Всякие переменные
@@ -47,7 +47,6 @@ void setup() {
 }
  
 void loop() {
-  now_temp = dht.readTemperature();
   if(now_temp > max_temp) { max_temp = now_temp; }
   if(now_temp < min_temp) { min_temp = now_temp; }
   if(min_temp == 0) { min_temp = 50; }
@@ -79,12 +78,12 @@ if(clockmode == 1) { //Меню 1 - главное
        lcd.print(now.minute(), DEC); 
       }
       if(now.minute() >= 10) { lcd.print(now.minute(), DEC); }
-      lcd.print(" T:");   
+      lcd.print(" T:");
+      if(last_temp == now_temp) {
       if(dht.readTemperature() >= 10) { lcd.print(dht.readTemperature(), 0); } //И с температурой тоже
-      if(dht.readTemperature() < 10){
-      lcd.print("0");
-      lcd.print(dht.readTemperature(), 0);
+      if(dht.readTemperature() < 10){ lcd.print("0"); lcd.print(dht.readTemperature(), 0); }
       }
+      if(last_temp != now_temp) { last_temp = now_temp; }
       if(alarm == true) { //Если будильник включен, то
         lcd.setCursor(15,0);
         lcd.print("\xed"); //Отображаем значок на дисплее
@@ -292,6 +291,8 @@ if(clockmode == 4) { //Меню 4 - меню в котором отобража�
   if(alarm == false) { lcd.print("No alarm set!"); }
 }
 
+now_temp = dht.readTemperature();
+
 //Это система работы подсветки, начало
 if(KB.isPressed()) { //Если нажата кнопка
   if(KB.getNum == 14) { //Если кнопка - *, то
@@ -364,19 +365,19 @@ if(KB.isPressed()) { //Если нажата кнопка
                   delay(1000); //Ждем, пока юзер прочитает
                 }
                 if(KB.getNum == passalarm1) { //Если все правильно
-                EEPROM.write(2, false); //Опускаем флажок будильника 
+                EEPROM.write(2, false); //Опускаем флажок будильника
                 digitalWrite(led_pin,LOW); //Выключаем светодиод
                 digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
                 passalarm0 = random(0,9); //Генерируем новое рандомное число
                 passalarm1 = random(0,9); //Генерируем новое рандомное число
-                clockmode = 1; //Переходим в первое меню
-                break; //Выходим из цикла
+                break;
                     }
                   }
                 }
               }
             }
           delay(100); //задержка
+          if(EEPROM.read(2) == false) { break; }
     }  
   }
   void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
