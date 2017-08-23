@@ -34,7 +34,7 @@ int clockmode = 1;
 int alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos; //Всякие переменные
 int passalarm0 = random(10);
 int passalarm1 = random(10);
-boolean Backlight_flag;
+boolean Backlight_flag, Backlight_constant_flag;
 boolean alarm,ShowDate,calibration;
 void setup() {
   pinMode(Backlight_pin, OUTPUT); //Установка пинов 
@@ -59,11 +59,11 @@ void loop() {
   ShowDate = EEPROM.read(0); //Выставление значений переменным в зависимости от EEPROM
   DateTime now = rtc.now(); //Время
   if(calibration == true) { Calibrationfunction(); } //Если ардуина не настроена, то запустить этот процесс
-   if(KB.isPressed()) { //Процесс выбора меню 
+  if(KB.isPressed()) { //Процесс выбора меню 
     if(KB.getNum == 1) { clockmode--; } //Если нажата кнопка 1 - то увеличиваем значение режима
     if(KB.getNum == 2) { clockmode = 1; } //Если нажата кнопка 2 - то меню 2
     if(KB.getNum == 3) { clockmode++; } //Если нажата кнопка 3 - то меню 3
-    }
+  }
     if(clockmode == 0) { clockmode = 4;}
     if(clockmode == 5) { clockmode = 1;}
 
@@ -330,12 +330,15 @@ if(clockmode == 4) { //Меню 4 - меню в котором отобража�
 now_temp = dht.readTemperature();
 
 //Это система работы подсветки, начало
-if(KB.isPressed()) { //Если нажата кнопка
+if(KB.isPressed()) {
   if(KB.getNum == 14 && Backlight_flag == true) {
     Backlight_flag = false; //Опускаем флажок
     for(int i = 255; i>0; i--) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного выключения подсветки
     digitalWrite(Backlight_pin, LOW); //Выключаем подсветку
-  }
+  }  
+}
+if(KB.isPressed()) { //Если нажата кнопка
+  delay(200); 
   if(KB.getNum == 14) { //Если кнопка - *, то
   for(int i = 0; i<255; i++) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного включения подсветки
   digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
