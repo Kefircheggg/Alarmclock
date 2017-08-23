@@ -52,10 +52,12 @@ void loop() {
   DateTime now = rtc.now(); //Время
   if(calibration == true) { Calibrationfunction(); } //Если ардуина не настроена, то запустить этот процесс
    if(KB.isPressed()) { //Процесс выбора меню 
-    if(KB.getNum == 1) { clockmode = 1; } //Если нажата кнопка 1 - то меню 1
-    if(KB.getNum == 2) { clockmode = 2; } //Если нажата кнопка 2 - то меню 2
-    if(KB.getNum == 3) { clockmode = 3; } //Если нажата кнопка 3 - то меню 3
+    if(KB.getNum == 1) { clockmode--; } //Если нажата кнопка 1 - то увеличиваем значение режима
+    if(KB.getNum == 2) { clockmode = 1; } //Если нажата кнопка 2 - то меню 2
+    if(KB.getNum == 3) { clockmode++; } //Если нажата кнопка 3 - то меню 3
     }
+    if(clockmode == 0) { clockmode = 4;}
+    if(clockmode == 5) { clockmode = 1;}
     if(clockmode == 1) { //Если первое меню
       if(now.hour() < 10) { //Тут у меня система красивого написания чисел, если число меньше 10 то,
       lcd.print("0"); //В начале приписывается 0
@@ -351,24 +353,14 @@ if(KB.isPressed()) { //Если нажата кнопка
     }  
   }
   void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
-    if(button == any) {
-      while(true) { //бесконечный цикл
-        if(KB.onPress()) { break; } //При нажатии кнопки выходим из цикла 
-        }
-        delay(10); //задержка
-      }  
-    }
-    if(button != any) {
     while(true) { //бесконечный цикл
       if(KB.onPress()) { //При нажатии кнопки
-        if(KB.getNum == button) { //Если кнопка равна указанной
-          break; //выходим из цикла
-        }
+        if(KB.getNum == button) { break; } //Если кнопка равна указанной выходим из цикла
       }
       delay(10); //задержка
     }
   }
-  }
+
   void Calibrationfunction() { //Это функция первоначальной настройки
     digitalWrite(Backlight_pin,HIGH);  //Включаем подсветку
     lcd.setCursor(5,0); //Ставим курсор
