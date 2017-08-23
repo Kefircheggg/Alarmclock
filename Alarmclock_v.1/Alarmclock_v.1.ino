@@ -436,34 +436,34 @@ if(KB.isPressed()) { //Если нажата кнопка
         lcd.clear(); //Очищаем дисплей
     }
     lcd.clear(); //Очищаем дисплей
-    lcd.print("Ok, Go next"); //Опиши меня пляззз пук кек чебурек
-    delay(2000);
-    lcd.clear();
-    lcd.print(" Now we choise ");
-    lcd.setCursor(0,1);
-    lcd.print("time work light");
-    pressfornext(5);
-    while(true) {
-        if(KB.onPress()) {
-          if(KB.getNum == 4) { lightpos=0; }
-          if(KB.getNum == 5) { lightpos=1; }
-          if(KB.getNum == 6) { lightpos=2; }
-          if(KB.getNum == 8) { 
-            if(lightpos == 0) {
-              EEPROM.write(1, 5); 
-              lcd.clear();
-              lcd.print("light work 5s");
-              delay(3000);
-              break;
+    lcd.print("Ok, Go next"); //Отображаем информацию
+    delay(2000); //Ждем
+    lcd.clear(); //Очищаем дисплей
+    lcd.print(" Now we choise "); //Отображаем информацию
+    lcd.setCursor(0,1); //Выставляем курсор 
+    lcd.print("time work light"); //Отображаем информацию
+    pressfornext(5); //см. строку 373
+    while(true) { //Цикл выбора времени работы подсветки
+        if(KB.onPress()) { //При нажатии кнопки 
+          if(KB.getNum == 4) { lightpos=0; } //Если кнопка - 4 Ставим [] на 5
+          if(KB.getNum == 5) { lightpos=1; } //Если кнопка - 5 Ставим [] на 10
+          if(KB.getNum == 6) { lightpos=2; } //Если кнопка - 6 Ставим [] на 20
+          if(KB.getNum == 8) { //Если кнопка - 8 
+            if(lightpos == 0) { //То в зависимости от ранее нажатой кнопки 
+              EEPROM.write(1, 5); //Ставим либо 5, 10 или 20 секунд
+              lcd.clear(); //Очищаем дисплей
+              lcd.print("light work 5s"); //Отображаем информацию
+              delay(3000); //Ждем, пока юзер прочитает 
+              break; //Выходим из цикла 
             }
-            if(lightpos == 1) {
+            if(lightpos == 1) { //Тут все идентично
               EEPROM.write(1, 10); 
               lcd.clear();
               lcd.print("light work 10s");
               delay(3000);
               break;  
             }
-            if(lightpos == 2) {
+            if(lightpos == 2) { //Тут все идентично
               EEPROM.write(1, 20);
               lcd.clear();
               lcd.print("light work 20s");
@@ -472,9 +472,9 @@ if(KB.isPressed()) { //Если нажата кнопка
             }
           }
         }
-        lcd.print("Time work light?");
-        lcd.setCursor(0,1);
-        if(lightpos == 0) {
+        lcd.print("Time work light?"); //Отображаем информацию
+        lcd.setCursor(0,1); //Выставляем курсор
+        if(lightpos == 0) { //Рисуем [] в зависимости от нажатой кнопки  
           lcd.print(" [5] 10  20");
           }
         if(lightpos == 1) {
@@ -483,24 +483,28 @@ if(KB.isPressed()) { //Если нажата кнопка
         if(lightpos == 2) {
           lcd.print("  5  10 [20]");
           }
-        delay(100);
-        lcd.clear();
+        delay(100); //Ждем
+        lcd.clear(); //Очищаем дисплей
     }
-    lcd.clear();
-    lcd.print("calibration end,");
-    lcd.setCursor(0,1);
-    lcd.print("you can restart");
-    pressfornext(5);
-    lcd.setCursor(0,0);
-    lcd.print("you can restart");
-    lcd.setCursor(0,1);
-    lcd.print("it from settings");
-    pressfornext(5);
-    lcd.setCursor(0,0);
-    lcd.clear();
-    lcd.print("in future");
-    pressfornext(5);
-    EEPROM.write(5, false);
-    digitalWrite(Backlight_pin,LOW);
+    lcd.clear(); //Очищаем дисплей
+    lcd.print("calibration end,"); //Отображаем информацию
+    lcd.setCursor(0,1); //Выставляем курсор
+    lcd.print("you can restart"); //Отображаем информацию
+    pressfornext(5); //см. строку 373
+    lcd.setCursor(0,0); //Выставляем курсор
+    lcd.print("you can restart"); //Отображаем информацию
+    lcd.setCursor(0,1); //Выставляем курсор
+    lcd.print("it from settings"); //Отображаем информацию
+    pressfornext(5); //см. строку 373
+    lcd.setCursor(0,0); //Выставляем курсор
+    lcd.clear(); //Очищаем дисплей 
+    lcd.print("in future"); //Отображаем информацию
+    pressfornext(5); //см. строку 373
+    EEPROM.write(5, false); //Опускаем флажок настройки
+    digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+    //Далее юзера перекидывает в 1 меню
   } 
+  /*
+  "Делает дэб"
+  */
 
