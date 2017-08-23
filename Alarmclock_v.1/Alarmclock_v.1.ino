@@ -80,8 +80,8 @@ if(clockmode == 1) { //Меню 1 - главное
       if(now.minute() >= 10) { lcd.print(now.minute(), DEC); }
       lcd.print(" T:");
       if(last_temp == now_temp) {
-      if(dht.readTemperature() >= 10) { lcd.print(dht.readTemperature(), 0); } //И с температурой тоже
-      if(dht.readTemperature() < 10){ lcd.print("0"); lcd.print(dht.readTemperature(), 0); }
+      if(now_temp >= 10) { lcd.print(now_temp); } //И с температурой тоже
+      if(now_temp < 10){ lcd.print("0"); lcd.print(now_temp); }
       }
       if(last_temp != now_temp) { last_temp = now_temp; }
       if(alarm == true) { //Если будильник включен, то
