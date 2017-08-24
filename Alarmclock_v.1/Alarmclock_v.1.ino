@@ -373,6 +373,7 @@ if(KB.isPressed()) { //Если нажата кнопка
 
   void alarmFunction() { //Это функция будильника, тут можно творить что угодно
             while(true){ //Бесконечный цикл, который прерывается только по нажатию на две рандомные кнопки
+            DateTime now = rtc.now();
             digitalWrite(Backlight_pin, HIGH);
             digitalWrite(led_pin, HIGH);
             lcd.clear(); //Очищаем дисплей
@@ -385,6 +386,20 @@ if(KB.isPressed()) { //Если нажата кнопка
             tone(buzzer_pin,3500,250); //Пищим пищалкой
             tone(buzzer_pin,100,100); //Пищим пищалкой
             if(KB.onPress()) { //Если кнопка нажата
+              if(KB.getNum == 14) {
+                EEPROM.write(3, now.minute() + 5);
+                lcd.clear();
+                lcd.print("You have 5 min");
+                pressfornext(14);
+                for(int i = 255; i>255; i--) {
+                  analogWrite(led_pin, i);
+                  analogWrite(Backlight_pin, i);
+                  delay(2);
+                  }
+                digitalWrite(Backlight_pin, LOW);
+                digitalWrite(led_pin, LOW);
+                break;
+              }
               if(KB.getNum != passalarm0) { //Если нажатая кнопка не равна рандомной кнопке
                 lcd.clear(); //Очищаем дисплей
                 lcd.setCursor(0,0); //Выставляем курсор 
