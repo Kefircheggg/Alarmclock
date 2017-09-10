@@ -24,18 +24,13 @@ DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
 String version = "V1.3.5"; 
-int last_temp;
-int max_temp;
-int min_temp;
-int now_temp;
-int stb_time;
 unsigned long standby_timer;
 int clockmode = 1;
-int alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos; //Всякие переменные
+int alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos, max_temp, last_temp, min_temp, now_temp, stb_time; //Всякие переменные
 int passalarm0 = random(10);
 int passalarm1 = random(10);
-boolean Backlight_flag, Backlight_constant_flag;
-boolean alarm,ShowDate,calibration;
+boolean Backlight_flag, Backlight_constant_flag, alarm,ShowDate,calibration;
+
 void setup() {
   pinMode(Backlight_pin, OUTPUT); //Установка пинов 
   pinMode(led_pin,OUTPUT); //Установка пинов 
@@ -447,6 +442,7 @@ if(KB.isPressed()) { //Если нажата кнопка
             if(EEPROM.read(2) == false) { break; }
     }  
   }
+  
   void pressfornext(int button) { //Это очень удобная функция, ждет нажатия, и только тогда идет дальше
     while(true) { //бесконечный цикл
       if(KB.onPress()) { //При нажатии кнопки
