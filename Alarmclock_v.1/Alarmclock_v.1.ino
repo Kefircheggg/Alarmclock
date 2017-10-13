@@ -23,7 +23,7 @@ LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
-String version = "V1.3.5"; 
+String version = "V1.4.1"; 
 unsigned long standby_timer;
 int clockmode = 1;
 int alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos, max_temp, last_temp, min_temp, now_temp, stb_time; //Всякие переменные
@@ -298,7 +298,7 @@ if(clockmode == 3) { //Меню 3 - меню настроек
           lcd.print(" Vk.com/maxnic  ");
           pressfornext(8);
           lcd.clear();
-          lcd.print(" vk.com/maxnic  ");
+          lcd.print(" Vk.com/maxnic  ");
           lcd.setCursor(4,1);
           lcd.print(version);
           pressfornext(8);      
