@@ -2,6 +2,7 @@
   Created 2017
   by Kefircheggg
   Maximka Home Labs Inc.
+  rus lang version test
 */
 
 //-------БИБЛИОТЕКИ---------
@@ -9,7 +10,7 @@
 #include <RTClib.h>
 #include "DHT.h"
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+#include <LCD_1602_RUS.h>
 #include <AmperkaKB.h>
 //-------БИБЛИОТЕКИ---------
 
@@ -19,7 +20,7 @@ int led_pin = 9;  //Пин светодиода
 int dht_pin = 7; //Пин датчика температуры
 int buzzer_pin = 8; //Пин пищалки
 AmperkaKB KB(6, 5, 4, 3, 2, 1, 0); //Пины матричной клавиатуры
-LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
+LCD_1602_RUS lcd(0x3F, 16, 2);//Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
@@ -112,7 +113,8 @@ if(clockmode == 2) { //Меню 2 - меню с установками буди�
   */
   EEPROM.write(3,alarmtimeminute0); 
   EEPROM.write(4,alarmtimehour0);
-  lcd.print("Alarm setting"); //Отображаем текст
+  lcd.setCursor(0,0);  
+  lcd.print("Будильник"); //Отображаем текст
   lcd.setCursor(0,1);
   lcd.print(alarmtimehour0);
   lcd.print(":");
