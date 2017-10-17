@@ -245,7 +245,7 @@ if(clockmode == 3) { //Меню 3 - меню настроек
               for(int i = 0; i<5; i++) { EEPROM.write(i,0); delay(200); } //Сбрасываем все значения EEPROM
               EEPROM.write(5,true); //Поднимаем флажок настройки
               lcd.print("reboot me please"); //Отображаем информацию
-              delay(1000); //ждем, пока юзер прочитает
+              delay(3000); //ждем, пока юзер прочитает
               }
             if(KB.getNum == 5 && resetpos == 0) { //Если кнопка - 5, и положение NO 
               clockmode = 1; //Ставим режим 1
