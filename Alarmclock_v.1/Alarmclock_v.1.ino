@@ -15,10 +15,10 @@
 //-------БИБЛИОТЕКИ---------
 
 //-----------Настройки-----------
-int Backlight_pin = 10; //Пин подсветки
-int led_pin = 9;  //Пин светодиода
-int dht_pin = 7; //Пин датчика температуры
-int buzzer_pin = 8; //Пин пищалки
+#define Backlight_pin  10 //Пин подсветки
+#define led_pin 9  //Пин светодиода
+#define dht_pin 7 //Пин датчика температуры
+#define buzzer_pin 8 //Пин пищалки
 AmperkaKB KB(6, 5, 4, 3, 2, 1, 0); //Пины матричной клавиатуры
 LCD_1602_RUS lcd(0x3F, 16, 2);//Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
@@ -498,7 +498,7 @@ if(KB.isPressed()) { //Если нажата кнопка
             if(Showdatepos == 0) { //Если была нажата кнопка 4, то
               EEPROM.write(0,true); //Записываем в EEPROM 1
               lcd.clear(); //Очищаем дисплей
-              
+              lcd.setCursor(0,0);
               lcd.print("Я буду показывать"); //Отображаем информацию
               lcd.setCursor(0,1);
               lcd.print("дату");
@@ -508,6 +508,7 @@ if(KB.isPressed()) { //Если нажата кнопка
             if(Showdatepos == 1) { //Если была нажата кнопка 6, то
               EEPROM.write(0,false); //Записываем в EEPROM 0
               lcd.clear(); //Очищаем дисплей
+              lcd.setCursor(0,0);              
               lcd.print("Я не буду "); //Отображаем информацию
               lcd.setCursor(0,1);
               lcd.print("показывать дату");
@@ -541,30 +542,43 @@ if(KB.isPressed()) { //Если нажата кнопка
             if(lightpos == 0) { //То в зависимости от ранее нажатой кнопки 
               EEPROM.write(1, 5); //Ставим либо 5, 10 или 20 секунд
               lcd.clear(); //Очищаем дисплей
-              lcd.print("light work 5s"); //Отображаем информацию
+              lcd.setCursor(0,0);
+              lcd.print("Пoдcвeткa бyдeт"); //Отображаем информацию
+              lcd.setCursor(0,1);
+              lcd.print("рaбoтaть 5 ceк"); //Отображаем информацию
+              lcd.setCursor(0,0);
               delay(3000); //Ждем, пока юзер прочитает 
               break; //Выходим из цикла 
             }
             if(lightpos == 1) { //Тут все идентично
               EEPROM.write(1, 10); 
               lcd.clear();
-              lcd.print("light work 10s");
+              lcd.setCursor(0,0);
+              lcd.print("Пoдcвeткa бyдeт"); //Отображаем информацию
+              lcd.setCursor(0,1);
+              lcd.print("рaбoтaть 10 ceк"); //Отображаем информацию
+              lcd.setCursor(0,0);
               delay(3000);
               break;  
             }
             if(lightpos == 2) { //Тут все идентично
               EEPROM.write(1, 20);
               lcd.clear();
-              lcd.print("light work 20s");
+              lcd.setCursor(0,0);
+              lcd.print("Пoдcвeткa бyдeт"); //Отображаем информацию
+              lcd.setCursor(0,1);
+              lcd.print("рaбoтaть 20 ceк"); //Отображаем информацию
+              lcd.setCursor(0,0);
               delay(3000);
               break;
             }
           }
         }
-        lcd.print("Time work light?"); //Отображаем информацию
+        lcd.setCursor(0,1);
+        lcd.print("Время работы подсветки?"); //Отображаем информацию
         lcd.setCursor(0,1); //Выставляем курсор
-        if(lightpos == 0) { lcd.print(" [5] 10  20"); } //Рисуем [] в зависимости от нажатой кнопки  
-        if(lightpos == 1) { lcd.print("  5 [10] 20"); }
+        if(lightpos == 0) { lcd.print(" [5] 10  20 "); } //Рисуем [] в зависимости от нажатой кнопки  
+        if(lightpos == 1) { lcd.print("  5 [10] 20 "); }
         if(lightpos == 2) { lcd.print("  5  10 [20]"); }
         delay(100); //Ждем
         lcd.clear(); //Очищаем дисплей
@@ -590,3 +604,5 @@ if(KB.isPressed()) { //Если нажата кнопка
   /*
   "Делает дэб"
   */
+
+  
