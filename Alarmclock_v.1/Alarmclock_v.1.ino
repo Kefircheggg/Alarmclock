@@ -26,10 +26,11 @@ DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 RTC_DS1307 rtc; //Тип часов
 String version = "V2.1.1"; 
 unsigned long standby_timer;
-int clockmode = 1;
-int alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos, max_temp, last_temp, min_temp, now_temp, stb_time; //Всякие переменные
-int passalarm0 = random(10);
-int passalarm1 = random(10);
+byte clockmode = 1;
+byte alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos, max_temp, last_temp, min_temp, now_temp; //Всякие переменные
+int stb_time;
+byte passalarm0 = random(10);
+byte passalarm1 = random(10);
 boolean Backlight_flag, Backlight_constant_flag, alarm,ShowDate,calibration;
 
 void setup() {
