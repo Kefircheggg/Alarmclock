@@ -14,12 +14,12 @@
 //-------БИБЛИОТЕКИ---------
 
 //-----------Настройки-----------
-int Backlight_pin = PB13; //Пин подсветки
+int Backlight_pin = PA9; //Пин подсветки
 int led_pin = PB14;  //Пин светодиода
 int dht_pin = PB11; //Пин датчика температуры
 int buzzer_pin = PB12; //Пин пищалки
 AmperkaKB KB(PA6,PA5,PA4,PA3,PA2,PA1,PA0); //Пины матричной клавиатуры
-LiquidCrystal lcd(PB9, PB8, PB7, PB6, PB4, PB3); //Адрес и размер дисплея
+LiquidCrystal lcd(PA12, PA15, PB3, PB4, PB6, PB7); //Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
@@ -32,8 +32,6 @@ int passalarm1 = random(10);
 boolean Backlight_flag, Backlight_constant_flag, alarm,ShowDate,calibration;
 
 void setup() {
-  Serial.begin(9600);
-  Serial.print("Debug");
   pinMode(Backlight_pin, PWM); //Установка пинов 
   pinMode(led_pin,OUTPUT); //Установка пинов 
   lcd.begin(16, 2); //Инициализация дисплея     
@@ -333,34 +331,16 @@ if(clockmode == 4) { //Меню 4 - меню в котором отобража�
 now_temp = dht.readTemperature();
 
 //Это система работы подсветки, начало
-if(KB.isPressed()) {
-  if(KB.getNum == 14 && Backlight_flag == true) {
-    Backlight_flag = false; //Опускаем флажок
-    for(int i = 255; i>0; i--) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного выключения подсветки
-    digitalWrite(Backlight_pin, LOW); //Выключаем подсветку
-  }  
-}
-if(KB.isPressed()) { //Если нажата кнопка
-  delay(200); 
-  if(KB.getNum == 0) { //Если кнопка - *, то
-  for(int value = 0; value <= 65500; value += 1280) { 
-    pwmWrite(Backlight_pin, value); 
-    delay(1); 
-    } //Система плавного включения подсветки
-  digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
-  Backlight_flag = true; //Поднимаем флажок подсветки
-  standby_timer = millis(); //Даже не знаю что написать, поэтому пук кек
-  }
-}
-  if(Backlight_flag == true) { //Если флажок поднят
-      if(millis() - standby_timer > 1000*stb_time) { //Если с момента нажатия прошло больше чем stb_time*1000
-          Backlight_flag = false; //Опускаем флажок
-          for(int i = 255; i>0; i--) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного выключения подсветки
-          digitalWrite(Backlight_pin, LOW); //Выключаем подсветку
-          standby_timer = millis(); //см. строка 293
+  if(KB.isPressed()) {
+    if(KB.getNum == 0) {
+      for(int val = 0; val<20000; val+1) {
+        pwmWrite(Backlight_pin, val);
+        delay(1);
       }
-  }
-  //Конец
+      digitalWrite(Backlight_pin, HIGH);
+      }
+    }
+ //Конец
   //Функция срабатывания будильника, начало
     if(alarm == true) { //Если флажок будильника поднят
       if(alarmtimehour == now.hour()) { //Если час срабатывания настал
@@ -374,7 +354,6 @@ if(KB.isPressed()) { //Если нажата кнопка
   //Функция срабатывания будильника, конец
 
     delay(100); //Задержа для стабильности 
-    Serial.println(Backlight_flag);
     lcd.clear(); //Очищаем дисплей
 }
 
