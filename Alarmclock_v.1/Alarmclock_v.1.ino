@@ -23,6 +23,7 @@ LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
+String version = "V2.1.1"; 
 unsigned long standby_timer;
 int clockmode = 1;
 int alarmtimeminute, alarmtimehour, alarmtimehour0, alarmtimeminute0, possettings; //Всякие переменные
