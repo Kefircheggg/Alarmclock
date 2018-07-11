@@ -22,6 +22,8 @@ AmperkaKB KB(6, 5, 4, 3, 2, 1, 0); //Пины матричной клавиат�
 LiquidCrystal_I2C lcd(0x3F,16,2); //Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
+
+//----------Служебное------------
 RTC_DS1307 rtc; //Тип часов
 String version = "V2.1.1"; 
 unsigned long standby_timer;
@@ -30,6 +32,7 @@ int alarmtimeminute, alarmtimehour, alarmtimehour0, alarmtimeminute0, possetting
 int Showdatepos, lightpos, resetpos, max_temp, last_temp, min_temp, now_temp, stb_time;
 int stb_set_time;
 boolean Backlight_flag, Backlight_constant_flag, alarm,ShowDate,calibration;
+//----------Служебное------------
 
 void setup() {
   randomSeed(analogRead(0));
