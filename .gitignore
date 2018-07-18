@@ -2,7 +2,7 @@
 *.d
 .vs
 .vscode
-.build
+build
 # Compiled Object files
 *.slo
 *.lo
