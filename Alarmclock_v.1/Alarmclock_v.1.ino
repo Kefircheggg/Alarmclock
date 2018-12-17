@@ -24,7 +24,7 @@ LCD_1602_RUS lcd(0x3F, 16, 2);//Адрес и размер дисплея
 DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 //-----------Настройки----------- 
 RTC_DS1307 rtc; //Тип часов
-String version = "V2.1.1"; 
+String version = "V2.1.1 rus"; 
 unsigned long standby_timer;
 byte clockmode = 1;
 byte alarmtimeminute,alarmtimehour, alarmtimehour0,alarmtimeminute0,possettings,Showdatepos,lightpos,resetpos, max_temp, last_temp, min_temp, now_temp; //Всякие переменные
