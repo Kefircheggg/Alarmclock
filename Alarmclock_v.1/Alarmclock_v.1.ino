@@ -26,7 +26,7 @@ DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 
 //----------Служебное------------
 RTC_DS1307 rtc; //Тип часов
-String version = "V2.3.5"; 
+String version = "V2.3.6"; 
 unsigned long standby_timer;
 byte clockmode = 1;
 byte alarmtimeminute, alarmtimehour, possettings; //Всякие переменные
