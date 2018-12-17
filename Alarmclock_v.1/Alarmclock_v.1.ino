@@ -60,9 +60,9 @@ void loop() {
   ShowDate = EEPROM.read(0); //Выставление значений переменным в зависимости от EEPROM
   DateTime now = rtc.now(); //Время
   if(KB.onPress()) { //Процесс выбора меню
-    if(KB.getNum == 1 && clockmode > 1) { clockmode--; } //Если нажата кнопка 1 - то увеличиваем значение режима
-    if(KB.getNum == 2) { clockmode = 1; } //Если нажата кнопка 2 - то меню 2
-    if(KB.getNum == 3 && clockmode < 4) { clockmode++; } //Если нажата кнопка 3 - то меню 3
+    if(KB.getNum == 1 && clockmode > 1) { clockmode--; } //Если нажата кнопка 1 - то уменьшаем значение режима
+    if(KB.getNum == 2) { clockmode = 1; } //Если нажата кнопка 2 - то меню 1
+    if(KB.getNum == 3 && clockmode < 4) { clockmode++; } //Если нажата кнопка 3 - то увеличиваем значение режима
     if(KB.getNum == 14 && Backlight_flag == true) {
       Backlight_flag = false; //Опускаем флажок
       for(byte i = 255; i>0; i--) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного выключения подсветки
@@ -72,7 +72,7 @@ void loop() {
       for(byte i = 0; i<255; i++) { analogWrite(Backlight_pin, i); delay(2); } //Система плавного включения подсветки
       digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
       Backlight_flag = true; //Поднимаем флажок подсветки
-      standby_timer = millis(); //``\_(-_-)_/``
+      standby_timer = millis(); //сбрасываем время включения
     }
   }
 
