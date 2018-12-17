@@ -1,3 +1,4 @@
+//занимает 14588байт пзу и 1301 байт озу
 
 /*
   Created 2017
@@ -26,7 +27,6 @@ DHT dht(dht_pin,DHT11); //Тип дачтика: DHT11 или DHT22
 
 //----------Служебное------------
 RTC_DS1307 rtc; //Тип часов
-String version = "V2.3.6"; 
 unsigned long standby_timer;
 byte clockmode = 1;
 byte alarmtimeminute, alarmtimehour, possettings; //Всякие переменные
@@ -77,201 +77,19 @@ void loop() {
   }
 
 if(clockmode == 1) { //Меню 1 - главное
-  niceDraw(alarm; ShowDate);
+  mode1();
 }
 
 if(clockmode == 2) { //Меню 2 - меню с установками будильника
-  /*
-  В втором меню управление такое - кнопки 4 и 7 это управление часами(временем) + -
-  Кнопки 6 и 9 это управление минутами + -
-  Кнопка 5 - выставить 30 минут
-  Кнопка 8 - выставить 12 часов
-  Кнопка 0 - выставить текущее время
-  */
-  lcd.print("Alarm setting"); //Отображаем текст
-  lcd.setCursor(0,1);
-  lcd.print(alarmtimehour);
-  lcd.print(":");
-  lcd.print(alarmtimeminute);
-  if(KB.isPressed()) {
-    if(KB.getNum == 4)  { alarmtimehour++; } //если нажата кнопка 4 то прибавить часы
-    if(KB.getNum == 7)  { alarmtimehour--; } //если нажата кнопка 7 то убавить часы
-    if(KB.getNum == 6)  { alarmtimeminute++; } //если нажата кнопка 6 то прибавить минуты
-    if(KB.getNum == 9)  { alarmtimeminute--; } //если нажата кнопка 9 то убавить минуты
-    if(KB.getNum == 5)  { alarmtimeminute=30;} //если нажата кнопка 5 то выставить 30 минут
-    if(KB.getNum == 8)  { alarmtimehour=12;} //если нажата кнопка 8 то выставить 12 часов
-    if(KB.getNum == 0)  { alarmtimehour = now.hour(); alarmtimeminute = now.minute();} //если нажата кнопка 0 то выставить текущее время
-    if(KB.getNum == 15 && alarm == false) {
-      while(true) {  //Цикл подтверждения установки будильника
-        digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
-        lcd.setCursor(3,0); //Ставим курсор
-        lcd.print("Set alarm?"); //Отображаем информацию
-        lcd.setCursor(0,1); //Ставим курсор
-        lcd.print("  Press * or #"); //Отображаем информацию
-        if(KB.onPress()) { //Если нажата кнопка
-          if(KB.getNum == 15) { //Если кнопка - #
-          EEPROM.write(2,true); //Включаем будильник
-          lcd.clear(); //Очищаем дисплей
-          lcd.print("    Alarm set"); //Отображаем информацию
-          delay(1000); //Ждем, пока юзер прочитает
-          clockmode = 1; //Включаем режим 1
-          EEPROM.write(3,alarmtimeminute); 
-          EEPROM.write(4,alarmtimehour);
-          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
-          break; //выходим из цикла
-          }
-          if(KB.getNum == 14) { //Если кнопка - *
-          EEPROM.write(2,false); //Не включаем будильник
-          lcd.clear(); //Очищаем дисплей
-          lcd.print(" Alarm dont set"); //Отображаем информацию
-          delay(1000); //Ждем, пока юзер прочитает
-          clockmode = 1; //Включаем режим 1
-          EEPROM.write(3, 0); 
-          EEPROM.write(4, 0);
-          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
-          break; //выходим из цикла
-          }
-        }
-          delay(100); //Ждем для стабильности
-          lcd.clear(); //Очищаем дисплей
-      }   
-       }
-    if(KB.getNum == 15 && alarm == true) { //Если будильник уже включен
-      while(true) { //Запускаем цикл подтверждения выключения будильника
-        digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
-        lcd.setCursor(0,0); //Ставим курсор
-        lcd.print(" Disable alarm?"); //Отображаем информацию
-        lcd.setCursor(0,1); //Ставим курсор
-        lcd.print("  Press * or #"); //Отображаем информацию
-        if(KB.onPress()) { //Если нажата кнопка
-          if(KB.getNum == 15) { //Если кнопка - #
-          EEPROM.write(2,false); //Выключаем будильник
-          lcd.clear(); //Очищаем дисплей
-          lcd.print(" Alarm disabled"); //Отображаем информацию
-          delay(1000); //Ждем пока юзер прочитает 
-          clockmode = 1; //Ставим режим 1
-          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
-          break; //выходим из цикла
-          }
-          if(KB.getNum == 14) { //Если кнопка - *
-          lcd.clear(); //Очищаем дисплей
-          lcd.print("Alarm ne dis"); //Отображаем информацию
-          delay(1000); //Ждем пока юзер прочитает
-          clockmode = 1; //Ставим режим 1
-          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
-          break; //выходим из цикла
-          }
-        }
-          delay(100); //ждем для стабильности
-          lcd.clear(); //Очищаем дисплей
-        }   
-       }
-      } 
-  if(alarmtimehour == 24) { alarmtimehour=0;} //при переполнении часов сбрасываем
-  if(alarmtimeminute == 60) {alarmtimeminute=0; alarmtimehour++;} //при переполнении минут сбрасываем
-  if(alarmtimeminute < 0) {alarmtimeminute = 59;};
-  if(alarmtimehour < 0) {alarmtimehour = 23;};
+  mode2();
 }
 
 if(clockmode == 3) { //Меню 3 - меню настроек
-  /*
-  Кнопка 0 - ниже
-  Кнопка 5 - выше
-  Кнопка 7 - если пункт отображение даты - то это выставить нет, если время работы подсветки - то выставить 5сек
-  Кнопка 8 - если пункт сброса(reset) - то это сбросить, если время работы подсветки - то выставить 10сек
-  Кнопка 9 - если пункт отображение даты - то это выставить да, если время работы подсветки - то выставить 20сек
-  */
-  if(possettings == -1) { possettings = 3; } //Это при 
-  if(possettings == 4) { possettings = 0; } //Переполнении
-  if(KB.isPressed()) { //Если кнопка нажата
-    if(KB.getNum == 0) { possettings++; }  //Если кнопка - 0 опускаем курсор
-    if(KB.getNum == 5) { possettings--; } //Если кнопка - 5 Поднимаем курсор   
-  }
-  lcd.setCursor(11,0);  //Выставляем курсор
-  if(possettings == 0 || possettings == 1) { //Алгоритм отрисовки времени работы подсветки
-  lcd.setCursor(12,0);
-  lcd.print(stb_time);
-  }
-  lcd.setCursor(0,0); //Выставляем курсор
-  if(possettings == 0) { //Это система выставления > в зависимости от позиции  
-    lcd.print(">Time light "); //Отображаем информацию
-    if(KB.isPressed()) { //Если кнопка нажата
-      if(KB.getNum == 7) { stb_time--;} //Если кнопка - 7, то выставить 5 секунд
-      if(KB.getNum == 8) { EEPROM.write(1, stb_time);}
-      if(KB.getNum == 9) { stb_time++; } //Если кнопка - 9, то выставить 20 секунд
-    }
-    lcd.setCursor(0,1); //Выставляем курсор
-    lcd.print(" Show date  "); //Отображаем информацию
-    lcd.print(ShowDate);  //Флажок отображения даты
-  }
-  if(possettings == 1) { //Если пользователь нажал 0
-    if(KB.isPressed()) { //Если кнопка нажата
-      if(KB.getNum == 7) { EEPROM.write(0, false); } //Если кнопка - 7, то опустить флажок и запиисать в EEPROM 0
-      if(KB.getNum == 9) { EEPROM.write(0, true); } //Если кнопка - 9, то поднять флажок и запиисать в EEPROM 1
-    }
-    lcd.print(" Time light");  //Отображаем информацию
-    lcd.setCursor(0,1); //Ставим курсор
-    lcd.print(">Show date  "); //Отображаем информацию
-    lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
-  } 
-  if(possettings == 2){ //Это раздел сброса настроек
-    if(KB.isPressed()) { //Если кнопка нажата
-      if(KB.getNum == 8) { //Если кнопка - 8,то
-        while(true) { //Входим в цикл выбора: сбросить, или нет
-          digitalWrite(Backlight_pin,HIGH); //Включаем подсветку
-          if(KB.onPress()) { //Если кнопка нажата 
-            if(KB.getNum == 9) { resetpos=1; } //Если кнопка - 6 то ставим в положение YES
-            if(KB.getNum == 7) { resetpos=0; } //Если кнопка - 4 то ставим в положение NO
-            if(KB.getNum == 8 && resetpos == 1) { //Если кнопка - 5, и положение YES 
-              for(byte i = 0; i<5; i++) { EEPROM.write(i,0); delay(200); } //Сбрасываем все значения EEPROM
-              EEPROM.write(5,true); //Поднимаем флажок настройки
-              lcd.print("reboot me please"); //Отображаем информацию
-              delay(3000); //ждем, пока юзер прочитает
-              }
-            if(KB.getNum == 8 && resetpos == 0) { //Если кнопка - 5, и положение NO 
-              clockmode = 1; //Ставим режим 1
-              delay(200); //Ждем
-              break; //выходим из цикла
-             }   
-            }
-          lcd.print("     Reset?"); //Отображаем информацию
-          lcd.setCursor(0,1); //Ставим курсор
-          if(resetpos == 0) { //Система отображения [], простая
-          lcd.print("   [NO]  YES");
-          }
-          if(resetpos == 1) {
-          lcd.print("    NO  [YES]");
-          }
-          delay(100); //Ждем
-          lcd.clear(); //Очищаем дисплей
-        }
-      }
-     }
-    lcd.print(" Show Date  "); //Это уже не цикл, это продолжение отдела настроек, Отображаем информацию
-    lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
-    lcd.setCursor(0,1); //Выставляем курсор
-    lcd.print(">Reset  "); //Отображаем информацию
-  }
-  if(possettings == 3) {
-    lcd.print(" Reset");
-    lcd.setCursor(0,1);
-    lcd.print(">About program");
-    if(KB.isPressed()) { if(KB.getNum == 8) { AboutProgramm(); } }
-  } 
+ mode3();
 }
 
 if(clockmode == 4) { //Меню 4 - меню в котором отображается минимальная/максимальная температура и время срабатывания будильника если он включен
-  lcd.print("Max T:");
-  lcd.print(max_temp);
-  lcd.print(" Min:");
-  lcd.print(min_temp);
-  lcd.setCursor(0,1);
-  if(alarm == true) {
-    lcd.print(alarmtimehour);
-    lcd.print(":");
-    lcd.print(alarmtimeminute);
-    }
-  if(alarm == false) { lcd.print("No alarm set!"); }
+ mode4();
 }
 
 now_temp = dht.readTemperature();
@@ -519,7 +337,8 @@ now_temp = dht.readTemperature();
           lcd.clear();
   }
 
-  void niceDraw(boolean showAlarm; boolean showDate) {
+  void mode1() {
+    DateTime now = rtc.now();
           if(now.hour() < 10) { //Тут у меня система красивого написания чисел, если число меньше 10 то,
       lcd.print("0"); //В начале приписывается 0
       lcd.print(now.hour(), DEC); //И уже потом идет число
@@ -556,3 +375,198 @@ now_temp = dht.readTemperature();
         lcd.print(now.year(), DEC);
       }
   }
+
+void mode2() {
+DateTime now = rtc.now();
+  /*
+  В втором меню управление такое - кнопки 4 и 7 это управление часами(временем) + -
+  Кнопки 6 и 9 это управление минутами + -
+  Кнопка 5 - выставить 30 минут
+  Кнопка 8 - выставить 12 часов
+  Кнопка 0 - выставить текущее время
+  */
+  lcd.print("Alarm setting"); //Отображаем текст
+  lcd.setCursor(0,1);
+  lcd.print(alarmtimehour);
+  lcd.print(":");
+  lcd.print(alarmtimeminute);
+  if(KB.isPressed()) {
+    if(KB.getNum == 4)  { alarmtimehour++; } //если нажата кнопка 4 то прибавить часы
+    if(KB.getNum == 7)  { alarmtimehour--; } //если нажата кнопка 7 то убавить часы
+    if(KB.getNum == 6)  { alarmtimeminute++; } //если нажата кнопка 6 то прибавить минуты
+    if(KB.getNum == 9)  { alarmtimeminute--; } //если нажата кнопка 9 то убавить минуты
+    if(KB.getNum == 5)  { alarmtimeminute=30;} //если нажата кнопка 5 то выставить 30 минут
+    if(KB.getNum == 8)  { alarmtimehour=12;} //если нажата кнопка 8 то выставить 12 часов
+    if(KB.getNum == 0)  { alarmtimehour = now.hour(); alarmtimeminute = now.minute();} //если нажата кнопка 0 то выставить текущее время
+    if(KB.getNum == 15 && alarm == false) {
+      while(true) {  //Цикл подтверждения установки будильника
+        digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
+        lcd.setCursor(3,0); //Ставим курсор
+        lcd.print("Set alarm?"); //Отображаем информацию
+        lcd.setCursor(0,1); //Ставим курсор
+        lcd.print("  Press * or #"); //Отображаем информацию
+        if(KB.onPress()) { //Если нажата кнопка
+          if(KB.getNum == 15) { //Если кнопка - #
+          EEPROM.write(2,true); //Включаем будильник
+          lcd.clear(); //Очищаем дисплей
+          lcd.print("    Alarm set"); //Отображаем информацию
+          delay(1000); //Ждем, пока юзер прочитает
+          clockmode = 1; //Включаем режим 1
+          EEPROM.write(3,alarmtimeminute); 
+          EEPROM.write(4,alarmtimehour);
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
+          }
+          if(KB.getNum == 14) { //Если кнопка - *
+          EEPROM.write(2,false); //Не включаем будильник
+          lcd.clear(); //Очищаем дисплей
+          lcd.print(" Alarm dont set"); //Отображаем информацию
+          delay(1000); //Ждем, пока юзер прочитает
+          clockmode = 1; //Включаем режим 1
+          EEPROM.write(3, 0); 
+          EEPROM.write(4, 0);
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
+          }
+        }
+          delay(100); //Ждем для стабильности
+          lcd.clear(); //Очищаем дисплей
+      }   
+       }
+    if(KB.getNum == 15 && alarm == true) { //Если будильник уже включен
+      while(true) { //Запускаем цикл подтверждения выключения будильника
+        digitalWrite(Backlight_pin, HIGH); //Включаем подсветку
+        lcd.setCursor(0,0); //Ставим курсор
+        lcd.print(" Disable alarm?"); //Отображаем информацию
+        lcd.setCursor(0,1); //Ставим курсор
+        lcd.print("  Press * or #"); //Отображаем информацию
+        if(KB.onPress()) { //Если нажата кнопка
+          if(KB.getNum == 15) { //Если кнопка - #
+          EEPROM.write(2,false); //Выключаем будильник
+          lcd.clear(); //Очищаем дисплей
+          lcd.print(" Alarm disabled"); //Отображаем информацию
+          delay(1000); //Ждем пока юзер прочитает 
+          clockmode = 1; //Ставим режим 1
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
+          }
+          if(KB.getNum == 14) { //Если кнопка - *
+          lcd.clear(); //Очищаем дисплей
+          lcd.print("Alarm ne dis"); //Отображаем информацию
+          delay(1000); //Ждем пока юзер прочитает
+          clockmode = 1; //Ставим режим 1
+          digitalWrite(Backlight_pin,LOW); //Выключаем подсветку
+          break; //выходим из цикла
+          }
+        }
+          delay(100); //ждем для стабильности
+          lcd.clear(); //Очищаем дисплей
+        }   
+       }
+      } 
+  if(alarmtimehour == 24) { alarmtimehour=0;} //при переполнении часов сбрасываем
+  if(alarmtimeminute == 60) {alarmtimeminute=0; alarmtimehour++;} //при переполнении минут сбрасываем
+  if(alarmtimeminute < 0) {alarmtimeminute = 59;};
+  if(alarmtimehour < 0) {alarmtimehour = 23;};
+}
+
+void mode3() {
+    /*
+  Кнопка 0 - ниже
+  Кнопка 5 - выше
+  Кнопка 7 - если пункт отображение даты - то это выставить нет, если время работы подсветки - то выставить 5сек
+  Кнопка 8 - если пункт сброса(reset) - то это сбросить, если время работы подсветки - то выставить 10сек
+  Кнопка 9 - если пункт отображение даты - то это выставить да, если время работы подсветки - то выставить 20сек
+  */
+  if(possettings == -1) { possettings = 3; } //Это при 
+  if(possettings == 4) { possettings = 0; } //Переполнении
+  if(KB.isPressed()) { //Если кнопка нажата
+    if(KB.getNum == 0) { possettings++; }  //Если кнопка - 0 опускаем курсор
+    if(KB.getNum == 5) { possettings--; } //Если кнопка - 5 Поднимаем курсор   
+  }
+  lcd.setCursor(11,0);  //Выставляем курсор
+  if(possettings == 0 || possettings == 1) { //Алгоритм отрисовки времени работы подсветки
+  lcd.setCursor(12,0);
+  lcd.print(stb_time);
+  }
+  lcd.setCursor(0,0); //Выставляем курсор
+  if(possettings == 0) { //Это система выставления > в зависимости от позиции  
+    lcd.print(">Time light "); //Отображаем информацию
+    if(KB.isPressed()) { //Если кнопка нажата
+      if(KB.getNum == 7) { stb_time--;} //Если кнопка - 7, то выставить 5 секунд
+      if(KB.getNum == 8) { EEPROM.write(1, stb_time);}
+      if(KB.getNum == 9) { stb_time++; } //Если кнопка - 9, то выставить 20 секунд
+    }
+    lcd.setCursor(0,1); //Выставляем курсор
+    lcd.print(" Show date  "); //Отображаем информацию
+    lcd.print(ShowDate);  //Флажок отображения даты
+  }
+  if(possettings == 1) { //Если пользователь нажал 0
+    if(KB.isPressed()) { //Если кнопка нажата
+      if(KB.getNum == 7) { EEPROM.write(0, false); } //Если кнопка - 7, то опустить флажок и запиисать в EEPROM 0
+      if(KB.getNum == 9) { EEPROM.write(0, true); } //Если кнопка - 9, то поднять флажок и запиисать в EEPROM 1
+    }
+    lcd.print(" Time light");  //Отображаем информацию
+    lcd.setCursor(0,1); //Ставим курсор
+    lcd.print(">Show date  "); //Отображаем информацию
+    lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
+  } 
+  if(possettings == 2){ //Это раздел сброса настроек
+    if(KB.isPressed()) { //Если кнопка нажата
+      if(KB.getNum == 8) { //Если кнопка - 8,то
+        while(true) { //Входим в цикл выбора: сбросить, или нет
+          digitalWrite(Backlight_pin,HIGH); //Включаем подсветку
+          if(KB.onPress()) { //Если кнопка нажата 
+            if(KB.getNum == 9) { resetpos=1; } //Если кнопка - 6 то ставим в положение YES
+            if(KB.getNum == 7) { resetpos=0; } //Если кнопка - 4 то ставим в положение NO
+            if(KB.getNum == 8 && resetpos == 1) { //Если кнопка - 5, и положение YES 
+              for(byte i = 0; i<5; i++) { EEPROM.write(i,0); delay(200); } //Сбрасываем все значения EEPROM
+              EEPROM.write(5,true); //Поднимаем флажок настройки
+              lcd.print("reboot me please"); //Отображаем информацию
+              delay(3000); //ждем, пока юзер прочитает
+              }
+            if(KB.getNum == 8 && resetpos == 0) { //Если кнопка - 5, и положение NO 
+              clockmode = 1; //Ставим режим 1
+              delay(200); //Ждем
+              break; //выходим из цикла
+             }   
+            }
+          lcd.print("     Reset?"); //Отображаем информацию
+          lcd.setCursor(0,1); //Ставим курсор
+          if(resetpos == 0) { //Система отображения [], простая
+          lcd.print("   [NO]  YES");
+          }
+          if(resetpos == 1) {
+          lcd.print("    NO  [YES]");
+          }
+          delay(100); //Ждем
+          lcd.clear(); //Очищаем дисплей
+        }
+      }
+     }
+    lcd.print(" Show Date  "); //Это уже не цикл, это продолжение отдела настроек, Отображаем информацию
+    lcd.print(ShowDate); //Отображаем состояние флажка отображения даты
+    lcd.setCursor(0,1); //Выставляем курсор
+    lcd.print(">Reset  "); //Отображаем информацию
+  }
+  if(possettings == 3) {
+    lcd.print(" Reset");
+    lcd.setCursor(0,1);
+    lcd.print(">About program");
+    if(KB.isPressed()) { if(KB.getNum == 8) { AboutProgramm(); } }
+  } 
+}
+
+void mode4() {
+  lcd.print("Max T:");
+  lcd.print(max_temp);
+  lcd.print(" Min:");
+  lcd.print(min_temp);
+  lcd.setCursor(0,1);
+  if(alarm == true) {
+    lcd.print(alarmtimehour);
+    lcd.print(":");
+    lcd.print(alarmtimeminute);
+    }
+  if(alarm == false) { lcd.print("No alarm set!"); }
+}
