@@ -77,41 +77,7 @@ void loop() {
   }
 
 if(clockmode == 1) { //Меню 1 - главное
-      if(now.hour() < 10) { //Тут у меня система красивого написания чисел, если число меньше 10 то,
-      lcd.print("0"); //В начале приписывается 0
-      lcd.print(now.hour(), DEC); //И уже потом идет число
-      }
-      if(now.hour() >= 10) { lcd.print(now.hour(), DEC); }//Если число больше 10 то просто пишем число  
-      lcd.print(":");
-      if(now.minute() < 10) {//С минутами такая-же история
-       lcd.print("0");
-       lcd.print(now.minute(), DEC); 
-      }
-      if(now.minute() >= 10) { lcd.print(now.minute(), DEC); }
-      lcd.print(" T:");
-      if(now_temp >= 10) { lcd.print(now_temp); } //И с температурой тоже
-      if(now_temp < 10){ lcd.print("0"); lcd.print(now_temp); }
-      
-      if(alarm == true) { //Если будильник включен, то
-        lcd.setCursor(15,0);
-        lcd.print("\xed"); //Отображаем значок на дисплее
-        }
-      if(ShowDate == true) {
-        lcd.setCursor(0,1);
-        if(now.day() < 10) { //У даты - тоже такая же фигня
-          lcd.print("0"); 
-          lcd.print(now.day(),DEC);
-        }
-        if(now.day() >= 10) { lcd.print(now.day(),DEC); }
-        lcd.print(".");
-        if(now.month() < 10) {
-          lcd.print("0");
-          lcd.print(now.month(),DEC);
-        }
-        if(now.month() >= 10) { lcd.print(now.month(),DEC); }
-        lcd.print(".");
-        lcd.print(now.year(), DEC);
-      }
+  niceDraw(alarm; ShowDate);
 }
 
 if(clockmode == 2) { //Меню 2 - меню с установками будильника
@@ -551,4 +517,42 @@ now_temp = dht.readTemperature();
           lcd.print(version);
           pressfornext(8);      
           lcd.clear();
+  }
+
+  void niceDraw(boolean showAlarm; boolean showDate) {
+          if(now.hour() < 10) { //Тут у меня система красивого написания чисел, если число меньше 10 то,
+      lcd.print("0"); //В начале приписывается 0
+      lcd.print(now.hour(), DEC); //И уже потом идет число
+      }
+      if(now.hour() >= 10) { lcd.print(now.hour(), DEC); }//Если число больше 10 то просто пишем число  
+      lcd.print(":");
+      if(now.minute() < 10) {//С минутами такая-же история
+       lcd.print("0");
+       lcd.print(now.minute(), DEC); 
+      }
+      if(now.minute() >= 10) { lcd.print(now.minute(), DEC); }
+      lcd.print(" T:");
+      if(now_temp >= 10) { lcd.print(now_temp); } //И с температурой тоже
+      if(now_temp < 10){ lcd.print("0"); lcd.print(now_temp); }
+      
+      if(alarm == true) { //Если будильник включен, то
+        lcd.setCursor(15,0);
+        lcd.print("\xed"); //Отображаем значок на дисплее
+        }
+      if(ShowDate == true) {
+        lcd.setCursor(0,1);
+        if(now.day() < 10) { //У даты - тоже такая же фигня
+          lcd.print("0"); 
+          lcd.print(now.day(),DEC);
+        }
+        if(now.day() >= 10) { lcd.print(now.day(),DEC); }
+        lcd.print(".");
+        if(now.month() < 10) {
+          lcd.print("0");
+          lcd.print(now.month(),DEC);
+        }
+        if(now.month() >= 10) { lcd.print(now.month(),DEC); }
+        lcd.print(".");
+        lcd.print(now.year(), DEC);
+      }
   }
